@@ -2,7 +2,7 @@
 
 ## Contract status
 
-The file name is retained as `F-11-edit-template.md` to match the S1-02A task request, but the canonical feature ID is **F-03**. Template editing is part of the existing activity-template catalog feature. S1-01 remains unchanged: F-11 continues to mean the later reminder/schedule placeholder. This compatibility naming avoids changing the merged baseline or its existing traceability IDs.
+The canonical feature ID is **F-03**. Template editing is part of the existing activity-template catalog feature. S1-01 remains unchanged: F-11 continues to mean the later reminder/schedule placeholder.
 
 ## Behavior and workflow
 
@@ -71,5 +71,5 @@ The API uses the shared check order 401 → 403 → 404 → 400 → 409. A reque
 
 ## Definition of Done for F-03 template editing
 
-The manager PATCH endpoint, allowed-field validation, immutable-unit rejection, transaction/partial-update protection, and backend role checks are implemented. API/database tests cover manager success, participant denial, unknown/malformed fields, unit immutability, persistence, and conflict behavior. The UI displays loading/success/error states. The filename-to-canonical-ID compatibility note remains present so future contributors do not treat this contract as F-11 reminder work.
+The manager PATCH endpoint, allowed-field validation, immutable-unit rejection, transaction/partial-update protection, and backend role checks are implemented. API/database tests cover manager success, participant denial, unknown/malformed fields, unit immutability, persistence, and conflict behavior. The UI displays loading/success/error states. The contract remains separate from F-11 reminder work.
 
