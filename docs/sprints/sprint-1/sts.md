@@ -4,6 +4,10 @@
 
 This STS covers the requested contracts F-01, F-05, and the template-editing contract stored in `F-03-edit-template.md`. F-11 remains the S1-01 reminder/schedule placeholder. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
 
+## Baseline alignment
+
+S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-11` and `FR-16` remain planned for Sprint 3 as recorded in the merged baseline. The S1-02 task wording that places FR-16 in Sprint 1 is not adopted because no approved change has amended S1-01. This Part A contract does not implement or renumber F-11.
+
 ## Test cases
 
 | ID | AC | Level | Preconditions / input | Action | Expected result |
