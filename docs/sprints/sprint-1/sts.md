@@ -10,6 +10,7 @@ This STS covers the requested contracts F-01, F-05, and the template-editing con
 |---|---|---|---|---|---|
 | TEST-01 | AC-01 | API integration | Seeded Participant credentials are valid. | POST login with correct credentials. | 200, secure session cookie, correct safe user/role. |
 | TEST-02 | AC-02 | API integration | Unknown email or wrong password. | POST login. | 401 `INVALID_CREDENTIALS`; no account-existence detail. |
+| TEST-02a | AC-02a | API validation | Missing email, missing password, or malformed email. | POST login with malformed body. | 400 `INVALID_LOGIN_REQUEST`; no authentication attempt is disclosed. |
 | TEST-03 | AC-03 | API integration | Participant A session active. | GET `/api/me`. | 200 with A's safe identity only. |
 | TEST-04 | AC-04 | API integration | No cookie, revoked session, and expired session cases. | Call `/api/me` and a protected endpoint. | 401; no private response body. |
 | TEST-05 | AC-05 | API integration | Active session exists. | POST logout, then reuse cookie. | First response 204; subsequent protected call 401. |
