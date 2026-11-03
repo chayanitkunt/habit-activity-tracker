@@ -4,6 +4,8 @@
 
 Sprint 1 contract. This contract implements FR-09, FR-12, FR-13, BR-04, BR-05, BR-06, BR-07, BR-09, and depends on F-01, F-02, F-04, and F-08.
 
+Dependencies: authenticated session/current-user middleware, participant ownership checks, Goal and ActivityTemplate data, the shared date/value validation conventions, and the ActivityRecord migration.
+
 ## Behavior and workflow
 
 An authenticated Participant submits a quantity and a calendar date for one of their goals. The API loads the goal with its template, validates ownership and all domain constraints, then inserts one immutable activity record in a transaction. The record is returned after persistence. A duplicate date for the same goal is rejected; no existing row is updated or deleted.
@@ -61,6 +63,10 @@ Checks occur in the common order 401 → 403 → 404 → 400 → 409. The API do
 
 `ActivityRecord(id, goal_id, activity_date, quantity, created_at)` has a foreign key to Goal and a unique composite index on `(goal_id, activity_date)`. The API validates against the selected goal's template inside the transaction, then inserts. A unique-constraint conflict is translated to `DUPLICATE_DAILY_RECORD`; it cannot overwrite an existing record. Deleting records is not part of this contract.
 
+## UI behavior and migration
+
+The participant record form shows the template unit and valid range, defaults the date to the current `APP_TIMEZONE` calendar date, validates before submission, and displays loading, success, duplicate, validation, forbidden, and retryable-error states. History reloads from the API after success. Migration: create `ActivityRecord`, its Goal foreign key, quantity/date constraints, and unique `(goal_id, activity_date)` index.
+
 ## Acceptance criteria
 
 | ID | Observable outcome |
@@ -74,6 +80,20 @@ Checks occur in the common order 401 → 403 → 404 → 400 → 409. The API do
 | AC-14 | A second record for the same goal/date returns 409 and the first quantity remains unchanged. |
 | AC-15 | Two goals on one template can each have a record for the same date without collision. |
 | AC-16 | Malformed date and quantity inputs return 400 in the shared error shape. |
+
+## STS for F-05
+
+| Test ID | Linked AC | Level | Preconditions/input | Action | Expected result |
+|---|---|---|---|---|---|
+| TEST-08 | AC-08 | API/database integration | Owner Participant, valid goal/date/quantity. | POST record, then GET records. | 201 and persisted record returned. |
+| TEST-09 | AC-09 | API authorization | Program Manager session and participant goal. | POST record. | 403; no row stored. |
+| TEST-10 | AC-10 | API authorization | Participant A session and B's goal. | POST using B's goal ID. | Privacy-safe denial; no B data. |
+| TEST-11 | AC-11 | API validation | Tomorrow generated in `Asia/Bangkok`. | POST future date. | 400 `INVALID_ACTIVITY_DATE`. |
+| TEST-12 | AC-12 | API validation | Goal start/end known. | POST before start and after end. | 400; no row stored. |
+| TEST-13 | AC-13 | Unit/API boundary | Inclusive template range `[0, 500]`. | Submit 0, 500, -0.01, 500.01. | Bounds accepted; outside rejected. |
+| TEST-14 | AC-14 | API/database integration | One row exists for goal/date. | POST second quantity. | 409; original unchanged. |
+| TEST-15 | AC-15 | Database integration | Two goals share one template/date. | POST one record to each. | Both persist independently. |
+| TEST-16 | AC-16 | API validation | Bad date and non-numeric quantity. | POST malformed payloads. | 400 shared error; no partial insert. |
 
 ## Definition of Done for F-05
 

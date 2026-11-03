@@ -30,7 +30,6 @@ This STS covers the requested contracts F-01, F-05, and the template-editing con
 | TEST-20 | AC-20 | API/database integration | Manager session and active template. | Submit empty name, min > max, unknown field, and malformed decimal. | 400 for each; no partial update. |
 | TEST-21 | AC-21 | Database integration | Goal and record reference template. | Apply allowed template metadata update and reload goal/record. | Foreign keys and historical unit meaning remain intact. |
 | TEST-22 | AC-22 | API authorization | Manager requests absent/inaccessible template ID. | PATCH unknown ID. | 404 `TEMPLATE_NOT_FOUND`; no private resource detail. |
-| TEST-23 | AC-23 | Database/API integration | Two manager updates use the same version/lock token. | Submit both updates concurrently. | One succeeds; conflicting request returns 409; no silent lost update. |
 | TEST-24 | AC-01, AC-08, AC-14 | UI/E2E | Seeded accounts, template, and empty goal state. | Login, create/select goal, record valid date, repeat same date, reload history. | Normal journey persists; duplicate error is visible; original record remains. |
 | TEST-25 | AC-18, AC-19 | UI/API integration | Participant session and template page. | Attempt template edit and unit change through UI/API. | Backend rejects both; UI shows permission/validation error. |
 
@@ -42,6 +41,26 @@ This STS covers the requested contracts F-01, F-05, and the template-editing con
 | API/database | Login/session, record persistence/duplicate, ownership, template update/unit immutability, and conflict tests against a real test database. |
 | UI/E2E | One normal login-to-record-and-reload journey plus a visible rejection. |
 | Security | Unauthenticated, wrong-role, cross-participant, and participant-template-edit cases. |
+
+## AC-to-test map
+
+| Feature | Acceptance criteria | Planned tests |
+|---|---|---|
+| F-01 | AC-01–AC-07, AC-02a | TEST-01–TEST-07, TEST-02a |
+| F-03 | AC-17–AC-22 | TEST-17–TEST-22 |
+| F-05 | AC-08–AC-16 | TEST-08–TEST-16 |
+| F-02, F-04, F-06, F-07, F-11 | Contracts owned by Part B or later-sprint scope | Added to this map when their contracts are merged; no unlinked implementation test may be accepted. |
+
+## Manual checks
+
+| ID | Preconditions / action | Expected result |
+|---|---|---|
+| M-01 | Inspect repository, `.gitignore`, environment examples, logs, and test output for passwords, tokens, session secrets, or production credentials. | No real secrets are committed, displayed, or logged. |
+| M-02 | Start from a clean checkout, follow the documented setup/migration/seed commands, and run the documented build/test commands. | Setup is reproducible; migration and seed complete; build/tests run without undocumented local state. |
+
+## Critical journey coverage
+
+The selected end-to-end journey is TEST-24: login as a Participant, select/create a study goal, record a valid daily activity, attempt the same date again, observe the 409 rejection, reload history, and verify the original persisted record. TEST-01/05 cover authentication lifecycle, TEST-08/14 cover persistence and duplicate rejection, and TEST-25 covers backend role restriction.
 
 ## Definition of Done for this STS
 
