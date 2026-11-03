@@ -2,7 +2,7 @@
 
 ## Scope and test evidence
 
-This STS covers the requested contracts F-01, F-05, and F-11-edit-template. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
+This STS covers the requested contracts F-01, F-05, and the template-editing contract stored in `F-11-edit-template.md` under canonical feature ID F-03. F-11 remains the S1-01 reminder/schedule placeholder. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
 
 ## Test cases
 
@@ -45,5 +45,5 @@ This STS covers the requested contracts F-01, F-05, and F-11-edit-template. Test
 
 ## Definition of Done for this STS
 
-Every planned AC has an executed test or an explicitly recorded exception. Test names/files, commands, results, and tested commit are recorded. Domain tests include negative and boundary cases; API/database tests use real persistence and backend authorization; the selected UI journey is exercised; failures/skips are disclosed; teammate review and integration are complete; and the F-11 ID reconciliation with S1-01 is resolved before the branch is merged.
+Every planned AC has an executed test or an explicitly recorded exception. Test names/files, commands, results, and tested commit are recorded. Domain tests include negative and boundary cases; API/database tests use real persistence and backend authorization; the selected UI journey is exercised; failures/skips are disclosed; teammate review and integration are complete; and the compatibility mapping between filename `F-11-edit-template.md` and canonical feature F-03 is preserved.
 

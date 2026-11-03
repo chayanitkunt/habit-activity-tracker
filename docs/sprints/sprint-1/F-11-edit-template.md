@@ -1,8 +1,8 @@
-# F-11 — Edit activity template metadata
+# F-03 — Edit activity template metadata
 
 ## Contract status
 
-Sprint 1 contract requested as `F-11-edit-template`. It defines the manager template-edit operation described by FR-05 and BR-10. **ID reconciliation required before merge:** S1-01 currently assigns F-11 to the later reminder/schedule placeholder (FR-16/S3), while this task assigns F-11 to template editing. This contract must either be renumbered to the template feature ID in the final baseline or S1-01's feature inventory/traceability must be amended through an approved decision. The behavior below follows this task's explicit `F-11-edit-template` scope.
+The file name is retained as `F-11-edit-template.md` to match the S1-02A task request, but the canonical feature ID is **F-03**. Template editing is part of the existing activity-template catalog feature. S1-01 remains unchanged: F-11 continues to mean the later reminder/schedule placeholder. This compatibility naming avoids changing the merged baseline or its existing traceability IDs.
 
 ## Behavior and workflow
 
@@ -69,7 +69,7 @@ The API uses the shared check order 401 → 403 → 404 → 400 → 409. A reque
 | AC-22 | Missing/inaccessible template IDs do not disclose another resource and return the documented not-found response. |
 | AC-23 | A concurrent conflicting update returns 409 and does not silently discard a manager's change. |
 
-## Definition of Done for F-11-edit-template
+## Definition of Done for F-03 template editing
 
-The manager PATCH endpoint, allowed-field validation, immutable-unit rejection, transaction/partial-update protection, and backend role checks are implemented. API/database tests cover manager success, participant denial, unknown/malformed fields, unit immutability, persistence, and conflict behavior. The UI displays loading/success/error states, and the contract/ID reconciliation with S1-01 is resolved before merge.
+The manager PATCH endpoint, allowed-field validation, immutable-unit rejection, transaction/partial-update protection, and backend role checks are implemented. API/database tests cover manager success, participant denial, unknown/malformed fields, unit immutability, persistence, and conflict behavior. The UI displays loading/success/error states. The filename-to-canonical-ID compatibility note remains present so future contributors do not treat this contract as F-11 reminder work.
 
