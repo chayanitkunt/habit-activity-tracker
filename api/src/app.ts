@@ -7,8 +7,10 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { createAuthRouter, createCurrentUserRouter } from './routes/auth.routes.js';
 import { createTemplatesRouter } from './routes/templates.routes.js';
 import { createGoalsRouter } from './routes/goals.routes.js';
+import { createRecordsRouter } from './routes/records.routes.js';
+import { systemClock, type Clock } from './utils/clock.js';
 
-export const createApp = (pool: Pool = getPool()): Express => {
+export const createApp = (pool: Pool = getPool(), clock: Clock = systemClock): Express => {
   const app = express();
   app.use(express.json());
   app.use(cookieParser());
@@ -20,6 +22,7 @@ export const createApp = (pool: Pool = getPool()): Express => {
   app.use('/api/templates', templatesRouter);
   const goalsRouter = createGoalsRouter(pool, loadConfig());
   app.use('/api/goals', goalsRouter);
+  app.use('/api/goals/:id/records', createRecordsRouter(pool, loadConfig(), clock));
   app.use(notFoundHandler);
   app.use(errorHandler);
 
