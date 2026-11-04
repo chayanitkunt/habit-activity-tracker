@@ -55,6 +55,8 @@ button[type="submit"]:hover:not(:disabled) { background: var(--primary-hover); }
 button:disabled { opacity: .55; cursor: not-allowed; }
 .btn-ghost { padding: .35rem .8rem; color: var(--text); background: transparent; border: 1px solid var(--border); border-radius: 8px; }
 .btn-ghost:hover { background: var(--surface-2); }
+.btn-secondary { padding: .42rem .75rem; color: var(--primary); background: var(--surface); border: 1px solid #c7c9ff; border-radius: 8px; font-size: .85rem; font-weight: 600; transition: background .15s, border-color .15s, color .15s; }
+.btn-secondary:hover { color: var(--primary-hover); background: var(--primary-soft); border-color: var(--primary); }
 
 /* Template chips / list */
 .template-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
@@ -66,6 +68,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .template-pick:hover { border-color: var(--primary); }
 .template-pick[aria-pressed="true"] { color: var(--primary); background: var(--primary-soft); border-color: var(--primary); }
 .tag { padding: .05rem .5rem; border-radius: 999px; font-size: .72rem; font-weight: 600; background: var(--border); color: var(--muted); }
+.edit-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--border); }
 
 /* Goals list */
 .goal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
