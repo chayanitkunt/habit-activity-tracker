@@ -38,10 +38,14 @@ describe('F-04 create personal goal', () => {
     expect(response.body.goal).toEqual(expect.objectContaining({ template_id: templateId, target: 30, start_date: '2026-11-04', end_date: '2026-11-04' }));
   });
 
-  it('TEST-04.2 / AC-04.2 rejects invalid target/date and unknown or inactive templates', async () => {
+  it('TEST-04.2 / AC-04.2 rejects invalid target/date values', async () => {
     const agent = await login('alice@example.com');
     await agent.post('/api/goals').send({ template_id: templateId, target: 0, start_date: '2026-11-04', end_date: '2026-11-04' }).expect(400);
     await agent.post('/api/goals').send({ template_id: templateId, target: 10, start_date: '2026-11-05', end_date: '2026-11-04' }).expect(400);
+  });
+
+  it('TEST-04.7 / AC-04.2 rejects unknown and inactive templates', async () => {
+    const agent = await login('alice@example.com');
     await agent.post('/api/goals').send({ template_id: inactiveTemplateId, target: 10, start_date: '2026-11-04', end_date: '2026-11-04' }).expect(404);
     await agent.post('/api/goals').send({ template_id: '00000000-0000-4000-8000-000000000099', target: 10, start_date: '2026-11-04', end_date: '2026-11-04' }).expect(404);
   });
@@ -71,7 +75,7 @@ describe('F-04 create personal goal', () => {
     await agent.get(`/api/goals/${bobGoalId}`).expect(404);
   });
 
-  it('TEST-04.7 rejects unauthenticated goal requests', async () => {
+  it('TEST-04.8 rejects unauthenticated goal requests', async () => {
     await request(createApp(pool)).post('/api/goals').send({ template_id: templateId, target: 10, start_date: '2026-11-04', end_date: '2026-11-04' }).expect(401);
   });
 });
