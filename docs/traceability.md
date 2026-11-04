@@ -5,7 +5,7 @@
 | FR-01 | F-01 | S1 | AC-01/AC-02/AC-02a; TEST-01/TEST-02/TEST-02a login validation. |
 | FR-02 | F-01 | S1 | AC-03–AC-05; TEST-03–TEST-05 current user and logout. |
 | FR-03 | F-03 | S1 | AC-31–AC-34; TEST-31–TEST-34 template creation. |
-| FR-04 | F-03 | S1 | AC-35–AC-38; TEST-35–TEST-38 template browsing. |
+| FR-04 | F-03 | S1 | AC-35, AC-35a, AC-36–AC-38; TEST-35, TEST-35a, TEST-36–TEST-38 template browsing. |
 | FR-05 | F-03 | S1 | AC-17–AC-22; TEST-17–TEST-22 template editing. |
 | FR-06 | F-04 | S1 | AC-39/AC-44; TEST-39/TEST-44 goal creation journey. |
 | FR-07 | F-04 | S1 | AC-42; TEST-42/TEST-42a target/date validation. |
