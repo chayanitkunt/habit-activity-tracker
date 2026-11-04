@@ -78,16 +78,15 @@ Data migration: create or update the `User` and `Session` tables, the role enum,
 
 | Test ID | Linked AC | Level | Preconditions/input | Action | Expected result |
 |---|---|---|---|---|---|
-| TEST-01 | AC-01 | API/integration | Seeded valid Participant and Manager accounts. | POST valid login for each role. | 200, session created, correct safe role returned. |
-| TEST-02 | AC-02 | API/integration | Unknown email and wrong-password cases. | POST login. | 401 `INVALID_CREDENTIALS`; no account detail. |
-| TEST-02a | AC-02a | API validation | Missing email, missing password, and malformed email cases. | POST login with malformed body. | 400 `INVALID_LOGIN_REQUEST`; no authentication attempt is disclosed. |
-| TEST-03 | AC-03 | API/integration | Active Participant session. | GET `/api/me`. | 200 with only current user's safe identity and role. |
-| TEST-04 | AC-04 | API/integration | Missing, revoked, and expired sessions. | Call `/api/me` and a protected endpoint. | 401 with no private data. |
-| TEST-05 | AC-05 | API/integration | Active session. | POST logout, then reuse cookie. | 204 then 401 on reuse. |
-| TEST-06 | AC-06 | Unit/security | Seeded user and captured logs. | Inspect password storage and logs. | bcrypt hash only; no plaintext password. |
-| TEST-07 | AC-07 | API/integration | Successful login. | Inspect `Set-Cookie`. | Required `HttpOnly`, `SameSite`, `Secure`, and expiry attributes. |
+| TEST-01 | AC-01 | API/database integration | Seeded valid Participant and Manager accounts. | POST valid login for each role. | 200, session created, correct safe role returned. |
+| TEST-02 | AC-02 | API/database integration | Unknown email and wrong-password cases. | POST login. | 401 `INVALID_CREDENTIALS`; no account detail. |
+| TEST-02a | AC-02a | API validation/authorization | Missing email, missing password, and malformed email cases. | POST login with malformed body. | 400 `INVALID_LOGIN_REQUEST`; no authentication attempt is disclosed. |
+| TEST-03 | AC-03 | API/database integration | Active Participant session. | GET `/api/me`. | 200 with only current user's safe identity and role. |
+| TEST-04 | AC-04 | API validation/authorization | Missing, revoked, and expired sessions. | Call `/api/me` and a protected endpoint. | 401 with no private data. |
+| TEST-05 | AC-05 | API/database integration | Active session. | POST logout, then reuse cookie. | 204 then 401 on reuse. |
+| TEST-06 | AC-06 | Unit | Seeded user and captured logs. | Inspect password storage and logs. | bcrypt hash only; no plaintext password. |
+| TEST-07 | AC-07 | API/database integration | Successful login. | Inspect `Set-Cookie`. | Required `HttpOnly`, `SameSite`, `Secure`, and expiry attributes. |
 
 ## Definition of Done for F-01
 
 The login, current-user, and logout endpoints are implemented; bcrypt and session expiry are configured; API tests cover valid/invalid login and session rejection; protected endpoint middleware uses the current user; secrets are externalized; a teammate reviews the contract and implementation; and test output is recorded against the release commit.
-

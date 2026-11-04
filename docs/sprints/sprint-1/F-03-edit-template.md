@@ -79,13 +79,12 @@ The manager edit form loads the current template, shows unit as read-only, valid
 | Test ID | Linked AC | Level | Preconditions/input | Action | Expected result |
 |---|---|---|---|---|---|
 | TEST-17 | AC-17 | API/database integration | Manager session and active template. | PATCH allowed metadata. | 200; reload shows persisted update. |
-| TEST-18 | AC-18 | API authorization | Participant session and shared template. | PATCH template metadata. | 403; template unchanged. |
-| TEST-19 | AC-19 | API validation/database | Existing template has unit `pages`. | PATCH with `unit`. | 400 `UNIT_IMMUTABLE`; stored unit unchanged. |
+| TEST-18 | AC-18 | API validation/authorization | Participant session and shared template. | PATCH template metadata. | 403; template unchanged. |
+| TEST-19 | AC-19 | API/database integration | Existing template has unit `pages`. | PATCH with `unit`. | 400 `UNIT_IMMUTABLE`; stored unit unchanged. |
 | TEST-20 | AC-20 | API/database integration | Manager session and active template. | Submit empty name, min > max, unknown field, malformed decimal. | 400 for each; no partial update. |
 | TEST-21 | AC-21 | Database integration | Goal and record reference template. | Apply allowed metadata update and reload goal/record. | Links and historical unit meaning remain intact. |
-| TEST-22 | AC-22 | API authorization | Manager requests inaccessible ID. | PATCH unknown ID. | 404 with no private resource detail. |
+| TEST-22 | AC-22 | API validation/authorization | Manager requests inaccessible ID. | PATCH unknown ID. | 404 with no private resource detail. |
 
 ## Definition of Done for F-03 template editing
 
 The manager PATCH endpoint, allowed-field validation, immutable-unit rejection, transaction/partial-update protection, and backend role checks are implemented. API/database tests cover manager success, participant denial, unknown/malformed fields, unit immutability, persistence, and conflict behavior. The UI displays loading/success/error states. The contract remains separate from F-11 reminder work.
-
