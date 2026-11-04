@@ -4,6 +4,7 @@ import { currentUser, type User } from './auth/authApi';
 import { ProtectedRoute } from './auth/ProtectedRoute';
 import { Header } from './components/Header';
 import { LoginPage } from './pages/LoginPage';
+import { TemplatesPage } from './pages/TemplatesPage';
 
 const App = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -22,7 +23,7 @@ const App = () => {
   if (!user) return <LoginPage onSuccess={redirectForRole} />;
   return <ProtectedRoute user={user} loading={loading} onUnauthenticated={() => setUser(null)}>
     <Header user={user!} onLogout={signOut} />
-    <main><h1>{user!.role === 'program_manager' ? 'Program Manager dashboard' : 'Study habits dashboard'}</h1><p>Authentication is ready. Activity goals and records will appear here in the next feature.</p></main>
+    <TemplatesPage user={user!} />
   </ProtectedRoute>;
 };
 

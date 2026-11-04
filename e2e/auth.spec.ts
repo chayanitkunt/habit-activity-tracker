@@ -9,7 +9,7 @@ test('TEST-01.8 / AC-01.1: participant can log in and log out in the browser', a
   await page.getByLabel('Email').fill('alice@example.com');
   await page.getByLabel('Password').fill(demoPassword);
   await page.getByRole('button', { name: 'Sign in' }).click();
-  await expect(page.getByRole('heading', { name: 'Study habits dashboard' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Activity templates' })).toBeVisible();
   await expect(page).toHaveURL(/\/participant$/);
   await page.getByRole('button', { name: 'Logout' }).click();
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();

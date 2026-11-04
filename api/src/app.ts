@@ -5,6 +5,7 @@ import { loadConfig } from './config/env.js';
 import { getPool } from './db/pool.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { createAuthRouter, createCurrentUserRouter } from './routes/auth.routes.js';
+import { createTemplatesRouter } from './routes/templates.routes.js';
 
 export const createApp = (pool: Pool = getPool()): Express => {
   const app = express();
@@ -13,6 +14,9 @@ export const createApp = (pool: Pool = getPool()): Express => {
 
   app.use('/api/auth', createAuthRouter(pool, loadConfig()));
   app.use('/api', createCurrentUserRouter(pool, loadConfig()));
+  const templatesRouter = createTemplatesRouter(pool, loadConfig());
+  app.use('/api/activity-templates', templatesRouter);
+  app.use('/api/templates', templatesRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
 
