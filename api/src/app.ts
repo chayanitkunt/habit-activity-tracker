@@ -8,6 +8,7 @@ import { createAuthRouter, createCurrentUserRouter } from './routes/auth.routes.
 import { createTemplatesRouter } from './routes/templates.routes.js';
 import { createGoalsRouter } from './routes/goals.routes.js';
 import { createRecordsRouter } from './routes/records.routes.js';
+import { createProgressRouter } from './routes/progress.routes.js';
 import { systemClock, type Clock } from './utils/clock.js';
 
 export const createApp = (pool: Pool = getPool(), clock: Clock = systemClock): Express => {
@@ -23,6 +24,7 @@ export const createApp = (pool: Pool = getPool(), clock: Clock = systemClock): E
   const goalsRouter = createGoalsRouter(pool, loadConfig());
   app.use('/api/goals', goalsRouter);
   app.use('/api/goals/:id/records', createRecordsRouter(pool, loadConfig(), clock));
+  app.use('/api/goals/:id/progress', createProgressRouter(pool, loadConfig()));
   app.use(notFoundHandler);
   app.use(errorHandler);
 
