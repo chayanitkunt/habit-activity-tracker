@@ -17,6 +17,22 @@ The commands below were run from `sprint-1-staging` at tested commit **`7620242`
 
 The E2E set covers the shell, authentication/logout, and the persisted manager-to-participant journey including duplicate daily-entry rejection. No required test was weakened or skipped. The API/database suite used the real local PostgreSQL test database.
 
+## S1-03 to S1-09 integration confirmation
+
+The following feature PRs are present in `sprint-1-staging` before this S1-10 docs branch:
+
+| Sprint | Feature | Branch | PR | Staging evidence |
+|---|---|---|---:|---|
+| S1-03 | Project skeleton and test harness | `feature/setup-skeleton` | #11 | merged before S1-04 |
+| S1-04 | F-01 authentication | `feature/F-01-auth` | #13 | merged before S1-05 |
+| S1-05 | F-02/F-03 templates | `feature/F-02-F-03-templates` | #15 | merged before S1-06 |
+| S1-06 | F-04 create personal goal | `feature/F-04-create-goal` | #18 | merged before S1-07 |
+| S1-07 | F-05 record daily activity | `feature/F-05-record-daily` | #20 | merged before S1-08 |
+| S1-08 | F-06/F-07 progress and history | `feature/F-06-progress-history` | #22 | merged before S1-09 |
+| S1-09 | F-03 template editing (task label F-11) | `feature/F-11-edit-template` | #27 | staging commit `7620242` |
+
+S1-09 is documented under canonical feature ID F-03; S1-01's F-11/FR-16 reminder placeholder remains Sprint 3.
+
 ## Baseline alignment
 
 S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-11` and `FR-16` remain planned for Sprint 3 as recorded in the merged baseline. The S1-02 task wording that places FR-16 in Sprint 1 is not adopted because no approved change has amended S1-01. This Part A contract does not implement or renumber F-11.
