@@ -24,6 +24,13 @@ export const runSeed = async (): Promise<void> => {
       [email, passwordHash, role]
     );
   }
+  const manager = await pool.query<{ id: string }>('SELECT id FROM users WHERE lower(email) = lower($1)', ['pm1@example.com']);
+  const managerId = manager.rows[0]?.id;
+  if (!managerId) throw new Error('Seed Program Manager was not created.');
+  const templates = [['Study Time', 'minutes', 1, 720, true], ['Pages Read', 'pages', 1, 300, true], ['Meditation', 'minutes', 1, 120, false]] as const;
+  for (const [name, unit, minValue, maxValue, isActive] of templates) {
+    await pool.query(`INSERT INTO activity_templates (name, unit, min_value, max_value, is_active, created_by) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (name) DO UPDATE SET unit = EXCLUDED.unit, min_value = EXCLUDED.min_value, max_value = EXCLUDED.max_value, is_active = EXCLUDED.is_active, updated_at = now()`, [name, unit, minValue, maxValue, isActive, managerId]);
+  }
 };
 
 const currentFilePath = fileURLToPath(import.meta.url);
