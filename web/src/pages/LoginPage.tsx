@@ -14,7 +14,7 @@ export const LoginPage = ({ onSuccess }: { onSuccess: (user: User) => void }) =>
     finally { setSubmitting(false); }
   };
 
-  return <main>
+  return <main className="login-wrap"><div className="card login-card">
     <h1>Habit &amp; Activity Tracker</h1><h2>Sign in</h2>
     <form onSubmit={submit} aria-label="Login form">
       <label htmlFor="email">Email</label>
@@ -24,5 +24,5 @@ export const LoginPage = ({ onSuccess }: { onSuccess: (user: User) => void }) =>
       {error && <p role="alert">{error}</p>}
       <button type="submit" disabled={submitting}>{submitting ? 'Signing in…' : 'Sign in'}</button>
     </form>
-  </main>;
+  </div></main>;
 };
