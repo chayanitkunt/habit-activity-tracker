@@ -12,7 +12,7 @@ The API first resolves a session, then enforces endpoint role, then resolves own
 |---|---|---|
 | Template list | allowed | allowed |
 | Template create/PATCH | 403 | allowed |
-| Goal, record, progress, history | own resources only | 403 or privacy-safe 404 per endpoint policy |
+| Goal, record, progress, history | own resources only | 403 `ROLE_FORBIDDEN` |
 
 For a protected request the order is 401 → 403 → 404 → 400 → 409. Cross-participant resources return `404 GOAL_NOT_FOUND` with no private response body. The server, not hidden UI controls, is authoritative.
 

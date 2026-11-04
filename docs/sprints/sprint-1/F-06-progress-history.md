@@ -8,7 +8,7 @@ This combined document preserves two feature IDs: **F-06** implements **FR-11, B
 
 For an owned goal, the service sums persisted `ActivityRecord.quantity`, calculates `total / target * 100`, rounds one decimal using half-up rounding, and caps the result at 100. `target` is the total for the goal period, not a per-day target. A goal with no records has total 0 and progress 0.0. Two goals using a common template remain independent because records are scoped by goal.
 
-Only the owner Participant accesses progress, history, or goal summary. A Program Manager receives `403 ROLE_FORBIDDEN` for every goal-related endpoint; another Participant receives privacy-safe 404. The protected order is 401 → 403 → 404 → 400. There are no query parameters in Sprint 1.
+Only the owner Participant accesses progress, history, or goal summary. A Program Manager receives `403 ROLE_FORBIDDEN` for every goal-related endpoint; another Participant receives privacy-safe 404. The protected order is 401 → 403 → 404 → 400 → 409, with 409 applicable only where conflicting state exists. There are no query parameters in Sprint 1.
 
 ## API contract
 

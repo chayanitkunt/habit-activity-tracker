@@ -6,7 +6,7 @@ Implements **FR-06, FR-07, FR-08, BR-08, BR-10, and NFR-02**. Depends on F-01 au
 
 ## Rules, permissions, and validation
 
-Only a Participant can create a goal; a Program Manager receives 403. `template_id` must identify an active template. `target` is a positive decimal within the template's inclusive `min_value`/`max_value`. `start_date` is today or earlier in `APP_TIMEZONE` (`Asia/Bangkok` by default); `end_date` is on or after `start_date`. The client cannot set `participant_id`, timestamps, or IDs. Unknown fields and malformed UUID/date/decimal values are rejected. After session and role checks, a malformed `template_id` returns `400 INVALID_GOAL`; a well-formed missing or inactive ID returns `404 TEMPLATE_NOT_FOUND`. The API checks 401 → 403 → 404 resource → 400 validation, except that a malformed ID receives 400 after session/role checks as defined in `conventions.md`.
+Only a Participant can create a goal; a Program Manager receives 403. `template_id` must identify an active template. `target` is a positive decimal within the template's inclusive `min_value`/`max_value`. `start_date` is today or earlier in `APP_TIMEZONE` (`Asia/Bangkok` by default); `end_date` is on or after `start_date`. The client cannot set `participant_id`, timestamps, or IDs. Unknown fields and malformed UUID/date/decimal values are rejected. After session and role checks, a malformed `template_id` returns `400 INVALID_GOAL_ID`; a well-formed missing or inactive ID returns `404 TEMPLATE_NOT_FOUND`. The API checks 401 → 403 → 404 resource → 400 validation, except that a malformed ID receives 400 after session/role checks as defined in `conventions.md`.
 
 ## API contract
 
@@ -28,6 +28,7 @@ Success `201`:
 | 403 | `ROLE_FORBIDDEN` | Program Manager creates a goal. |
 | 404 | `TEMPLATE_NOT_FOUND` | Template is missing or inactive. |
 | 400 | `INVALID_GOAL` | Bad/unknown field, target/range/date rule failure. |
+| 400 | `INVALID_GOAL_ID` | Malformed `template_id` after session and role checks. |
 
 ## UI and persistence
 
@@ -51,7 +52,7 @@ The participant form loads active templates, displays unit/range, validates targ
 | TEST-39 | AC-39 | API/database integration | Participant session, active template, valid body. | POST then GET own goal. | 201; persisted owner is current participant. |
 | TEST-40 | AC-40 | API validation/authorization | Manager session; valid body. | POST goal. | 403; no goal row. |
 | TEST-41 | AC-41 | API/database integration | Participant session; absent and inactive template IDs. | POST goal. | 404 `TEMPLATE_NOT_FOUND`; no row. |
-| TEST-42 | AC-42 | API validation/authorization | Participant session; invalid target/date/body variants. | POST each variant. | 400 `INVALID_GOAL`; no partial row. |
+| TEST-42 | AC-42 | API validation/authorization | Participant session; malformed template ID and invalid target/date/body variants. | POST each variant. | 400 `INVALID_GOAL_ID` for malformed ID or `INVALID_GOAL` for other invalid inputs; no partial row. |
 | TEST-42a | AC-42 | Unit | Goal validator with active-template range and fixed `APP_TIMEZONE` date. | Evaluate non-positive/out-of-range targets, future starts, end-before-start, malformed values, and valid boundaries without HTTP/database dependencies. | Validator accepts only valid target/date combinations and returns field-level failures for all invalid cases. |
 | TEST-43 | AC-43 | API validation/authorization | Existing owner goal. | Call unsupported PATCH and DELETE goal paths. | 404 `ROUTE_NOT_FOUND`; original goal unchanged. |
 | TEST-44 | AC-44 | UI/component | Participant and active/empty catalog fixtures. | Render and submit invalid/valid controlled states. | Guidance/errors visible; valid-goal navigation is requested. |

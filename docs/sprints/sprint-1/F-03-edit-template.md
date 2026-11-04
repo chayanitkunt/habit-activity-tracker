@@ -14,7 +14,7 @@ Allowed fields: `name`, `description`, `min_value`, and `max_value`. `is_active`
 
 ## API contract
 
-### `PATCH /api/templates/:templateId`
+### `PATCH /api/templates/:id`
 
 Request example:
 
