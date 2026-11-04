@@ -1,9 +1,9 @@
 export interface TemplateInput { name: string; description: string | null; unit: string; min_value: number; max_value: number; }
 export type TemplateValidationResult = { valid: true; value: TemplateInput } | { valid: false; details: Record<string, string> };
-export interface TemplateUpdateInput { name?: string; description?: string | null; min_value?: number; max_value?: number; is_active?: boolean; }
+export interface TemplateUpdateInput { name?: string; description?: string | null; min_value?: number; max_value?: number; }
 export type TemplateUpdateValidationResult = { valid: true; value: TemplateUpdateInput } | { valid: false; details: Record<string, string> };
 const allowedFields = new Set(['name', 'description', 'unit', 'min_value', 'max_value']);
-const updateFields = new Set(['name', 'description', 'unit', 'min_value', 'max_value', 'is_active']);
+const updateFields = new Set(['name', 'description', 'unit', 'min_value', 'max_value']);
 
 export const validateTemplate = (input: unknown): TemplateValidationResult => {
   const details: Record<string, string> = {};
@@ -47,10 +47,6 @@ export const validateTemplateUpdate = (input: unknown): TemplateUpdateValidation
       else if (body[field] < 0) details[field] = `${field} cannot be negative.`;
       else value[field] = body[field];
     }
-  }
-  if (Object.prototype.hasOwnProperty.call(body, 'is_active')) {
-    if (typeof body.is_active !== 'boolean') details.is_active = 'is_active must be a boolean.';
-    else value.is_active = body.is_active;
   }
   if (value.min_value !== undefined && value.max_value !== undefined && value.min_value > value.max_value) details.max_value = 'Maximum value must be greater than or equal to the minimum value.';
   if (Object.keys(details).length) return { valid: false, details };
