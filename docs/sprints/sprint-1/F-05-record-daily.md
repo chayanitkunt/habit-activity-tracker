@@ -86,16 +86,16 @@ The participant record form shows the template unit and valid range, defaults th
 | Test ID | Linked AC | Level | Preconditions/input | Action | Expected result |
 |---|---|---|---|---|---|
 | TEST-08 | AC-08 | API/database integration | Owner Participant, valid goal/date/quantity. | POST record, then GET records. | 201 and persisted record returned. |
-| TEST-09 | AC-09 | API authorization | Program Manager session and participant goal. | POST record. | 403; no row stored. |
-| TEST-10 | AC-10 | API authorization | Participant A session and B's goal. | POST using B's goal ID. | Privacy-safe denial; no B data. |
-| TEST-11 | AC-11 | API validation | Tomorrow generated in `Asia/Bangkok`. | POST future date. | 400 `INVALID_ACTIVITY_DATE`. |
-| TEST-12 | AC-12 | API validation | Goal start/end known. | POST before start and after end. | 400; no row stored. |
-| TEST-13 | AC-13 | Unit/API boundary | Inclusive template range `[0, 500]`. | Submit 0, 500, -0.01, 500.01. | Bounds accepted; outside rejected. |
+| TEST-09 | AC-09 | API validation/authorization | Program Manager session and participant goal. | POST record. | 403; no row stored. |
+| TEST-10 | AC-10 | API validation/authorization | Participant A session and B's goal. | POST using B's goal ID. | Privacy-safe denial; no B data. |
+| TEST-11 | AC-11 | API validation/authorization | Tomorrow generated in `Asia/Bangkok`. | POST future date. | 400 `INVALID_ACTIVITY_DATE`. |
+| TEST-12 | AC-12 | API validation/authorization | Goal start/end known. | POST before start and after end. | 400; no row stored. |
+| TEST-13 | AC-13 | API validation/authorization | Inclusive template range `[0, 500]`. | Submit 0, 500, -0.01, 500.01. | Bounds accepted; outside rejected. |
+| TEST-13a | AC-13 | Unit | Template range `[0, 500]` and decimal validator. | Evaluate 0, 500, -0.01, and 500.01 without HTTP/database dependencies. | Validator accepts inclusive bounds and rejects outside values. |
 | TEST-14 | AC-14 | API/database integration | One row exists for goal/date. | POST second quantity. | 409; original unchanged. |
 | TEST-15 | AC-15 | Database integration | Two goals share one template/date. | POST one record to each. | Both persist independently. |
-| TEST-16 | AC-16 | API validation | Bad date and non-numeric quantity. | POST malformed payloads. | 400 shared error; no partial insert. |
+| TEST-16 | AC-16 | API validation/authorization | Bad date and non-numeric quantity. | POST malformed payloads. | 400 shared error; no partial insert. |
 
 ## Definition of Done for F-05
 
 The endpoint, ownership checks, timezone/date/value validation, transaction, and unique constraint are implemented. Unit tests cover boundary calculations/validation; API/database tests cover persistence, duplicate rejection, role and cross-owner access; the critical UI journey records and reloads history; a review verifies no overwrite path exists; and test evidence is tied to a reviewed commit.
-
