@@ -2,7 +2,7 @@
 
 | Student | Role label | Student ID | Contribution |
 |---|---|---|---|
-| Kulchaya Paipinij | A | 67070503406 | S1-01 baseline documentation, S1-02A contracts, F-01 authentication, F-05 records, F-11/template-edit work, and release evidence pair work. |
-| Chayanit Kuntanarumitkul | B | 67070503408 | S1-02B contracts, F-02/F-03 templates, F-04 goals, F-06/F-07 progress/history, reviews, and release integration pair work. |
+| Kulchaya Paipinij | A / GitHub `chayongchaya` | 67070503406 | Authored PRs #3, #5, #9, #13, #18, #25, #27, #28, #29 and #31; reviewed/approved the B-authored PRs and approved release PR #32. See `github-review-evidence.md` for exact timestamps, comments and merge hashes. |
+| Chayanit Kuntanarumitkul | B / GitHub `chayanitkunt` | 67070503408 | Authored PRs #7, #11, #15, #20, #22 and #32; reviewed/approved the A-authored PRs and approved PR #31. See `github-review-evidence.md` for exact timestamps, comments and merge hashes. |
 
-The contribution descriptions should be cross-checked against the GitHub issue, branch, PR, and review history before final submission.
+The contribution descriptions were cross-checked against the GitHub PR author, branch, review, approval, comment, state and merge history recorded in `github-review-evidence.md`.
