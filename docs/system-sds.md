@@ -123,10 +123,10 @@ Status codes: 200 read/update, 201 create, 204 logout, 400 validation, 401 missi
 | PATCH `/api/templates/:id` | 401 | ✓ | 403 | Manager only; `unit` rejected for all roles. |
 | POST `/api/goals` | 401 | 403 | ✓ | Goal owner is current participant. |
 | GET `/api/goals` | 401 | 403 | ✓ | Own goals only. |
-| GET `/api/goals/:id` | 401 | 404/403 policy | owner ✓, other 404 | No manager/private access. |
-| POST `/api/goals/:id/records` | 401 | 404/403 policy | owner ✓, other 404 | Goal owner only. |
-| GET `/api/goals/:id/records` | 401 | 404/403 policy | owner ✓, other 404 | Goal owner only. |
-| GET `/api/goals/:id/progress` | 401 | 404/403 policy | owner ✓, other 404 | Goal owner only. |
+| GET `/api/goals/:id` | 401 | 403 `ROLE_FORBIDDEN` | owner ✓, other 404 | Managers have no private-goal access. |
+| POST `/api/goals/:id/records` | 401 | 403 `ROLE_FORBIDDEN` | owner ✓, other 404 | Managers have no record-creation access. |
+| GET `/api/goals/:id/records` | 401 | 403 `ROLE_FORBIDDEN` | owner ✓, other 404 | Managers have no private-history access. |
+| GET `/api/goals/:id/progress` | 401 | 403 `ROLE_FORBIDDEN` | owner ✓, other 404 | Managers have no progress access. |
 
 The automated matrix tests both cross-participant access and a participant attempting to edit a shared template. No role receives consent-based sharing in Sprint 1.
 

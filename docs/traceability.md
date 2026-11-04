@@ -2,40 +2,40 @@
 
 | Requirement | Feature | Sprint | Acceptance criterion / test |
 |---|---|---|---|
-| FR-01 | F-01 | S1 | AC-01 valid login returns session; invalid credentials return 401. |
-| FR-02 | F-01 | S1 | AC-02 `/me` returns current user and logout invalidates session. |
-| FR-03 | F-03 | S1 | AC-03 manager creates template with valid fields. |
-| FR-04 | F-03 | S1 | AC-04 authenticated user lists templates; unit is returned read-only. |
-| FR-05 | F-03 | S1 | AC-05 manager PATCH succeeds for allowed fields and rejects `unit`. |
-| FR-06 | F-04 | S1 | AC-06 participant creates a goal for a template. |
-| FR-07 | F-04/F-08 | S1 | AC-07 invalid target/date input returns 400. |
-| FR-08 | F-02/F-04 | S1 | AC-08 participant A cannot read participant B's goal. |
-| FR-09 | F-05 | S1 | AC-09 participant records a valid daily quantity. |
-| FR-10 | F-05 | S1 | AC-10 second record for same goal/date returns 409 and original remains unchanged. |
-| FR-11 | F-06 | S1 | AC-11 total/target is half-up rounded to one decimal and capped at 100. |
-| FR-12 | F-05/F-08 | S1 | AC-12 invalid range, future, and out-of-period dates return 400. |
-| FR-13 | F-05/F-07 | S1 | AC-13 two goals using one template have independent records/progress. |
-| FR-14 | F-02 | S1 | AC-14 manager and another participant receive 403/404 per policy and no private body. |
-| FR-15 | F-07/F-09 | S1 | AC-15 screens show loading, empty, success, and error states. |
-| FR-16 | F-11 | S3 | AC-16 schedule representation is persisted/displayed without notification dispatch. |
-| BR-01 | F-06 | S1 | T-01 period-total target calculation. |
-| BR-02 | F-06 | S1 | T-02 formula unit test. |
-| BR-03 | F-06 | S1 | T-03 half-up and cap test. |
-| BR-04 | F-05 | S1 | T-04 unique `(goal_id, activity_date)` and duplicate rejection. |
-| BR-05 | F-05 | S1 | T-05 same-template goal isolation. |
-| BR-06 | F-05/F-08 | S1 | T-06 inclusive min/max and outside-range tests. |
-| BR-07 | F-08 | S1 | T-07 Asia/Bangkok date-boundary test. |
-| BR-08 | F-04/F-08 | S1 | T-08 start today/past accepted; end before start rejected. |
-| BR-09 | F-05/F-08 | S1 | T-09 outside-goal-period rejection. |
-| BR-10 | F-03/F-04 | S1 | T-10 goal mutation is unavailable; template unit PATCH is rejected. |
-| BR-11 | F-02/F-11 | S1/S3 | T-11 permission matrix and no-notification test. |
-| NFR-01 | F-10 | S2 | N-01 p95 read/API ≤500 ms at 100k records. |
-| NFR-02 | F-02/F-10 | S1 | N-02 all protected endpoint auth tests. |
-| NFR-03 | F-01/F-10 | S1 | N-03 bcrypt cost and log inspection. |
-| NFR-04 | F-08/F-10 | S1 | N-04 UTC persistence/timezone tests. |
-| NFR-05 | F-08 | S1 | N-05 error schema contract test. |
-| NFR-06 | F-10 | S1 | N-06 coverage report ≥90% for rules and endpoint permissions. |
-| NFR-07 | F-10 | S3 | N-07 secret/deployment and restore exercise. |
+| FR-01 | F-01 | S1 | AC-01/AC-02/AC-02a; TEST-01/TEST-02/TEST-02a login validation. |
+| FR-02 | F-01 | S1 | AC-03–AC-05; TEST-03–TEST-05 current user and logout. |
+| FR-03 | F-03 | S1 | AC-31–AC-34; TEST-31–TEST-34 template creation. |
+| FR-04 | F-03 | S1 | AC-35–AC-38; TEST-35–TEST-38 template browsing. |
+| FR-05 | F-03 | S1 | AC-17–AC-22; TEST-17–TEST-22 template editing. |
+| FR-06 | F-04 | S1 | AC-39/AC-44; TEST-39/TEST-44 goal creation journey. |
+| FR-07 | F-04 | S1 | AC-42; TEST-42/TEST-42a target/date validation. |
+| FR-08 | F-02/F-04/F-07 | S1 | AC-26/AC-39/AC-48/AC-49; TEST-29/TEST-39/TEST-48/TEST-49 ownership and retrieval. |
+| FR-09 | F-05 | S1 | AC-08; TEST-08 daily record creation. |
+| FR-10 | F-05 | S1 | AC-14; TEST-14 duplicate rejection without overwrite. |
+| FR-11 | F-06 | S1 | AC-45–AC-47; TEST-45–TEST-47 progress calculation. |
+| FR-12 | F-05 | S1 | AC-11–AC-13/AC-16; TEST-11–TEST-13/TEST-16 record validation. |
+| FR-13 | F-05/F-07 | S1 | AC-15/AC-47; TEST-15/TEST-47 separate goals remain independent. |
+| FR-14 | F-02/F-07 | S1 | AC-25–AC-27/AC-49; TEST-28–TEST-30/TEST-49 privacy and authorization. |
+| FR-15 | F-07 | S1 | AC-44/AC-50; TEST-44/TEST-50 UI state and history/progress views. |
+| FR-16 | F-11 | S3 | Future F-11 contract; no Sprint 1 implementation or test. |
+| BR-01 | F-06 | S1 | AC-45; TEST-45 total-period target. |
+| BR-02 | F-06 | S1 | AC-45; TEST-45 progress formula. |
+| BR-03 | F-06 | S1 | AC-45; TEST-45 half-up rounding and cap. |
+| BR-04 | F-05 | S1 | AC-14; TEST-14 unique `(goal_id, activity_date)`. |
+| BR-05 | F-05/F-07 | S1 | AC-15/AC-47; TEST-15/TEST-47 same-template goal isolation. |
+| BR-06 | F-05 | S1 | AC-13; TEST-13 inclusive range. |
+| BR-07 | F-05 | S1 | AC-11; TEST-11 Asia/Bangkok date boundary. |
+| BR-08 | F-04 | S1 | AC-42; TEST-42/TEST-42a goal date rules. |
+| BR-09 | F-05 | S1 | AC-12; TEST-12 goal-period boundary. |
+| BR-10 | F-03/F-04 | S1 | AC-19/AC-43; TEST-19/TEST-43 immutable unit and goal lifecycle. |
+| BR-11 | F-02 | S1 | AC-23–AC-27; TEST-26–TEST-30 privacy/role enforcement. F-11 sharing remains out of scope in S3. |
+| NFR-01 | F-10 | S2 | N-01 planned performance verification. |
+| NFR-02 | F-01/F-02/F-04 | S1 | AC-04/AC-23/AC-40; TEST-04/TEST-26/TEST-40 protected access. |
+| NFR-03 | F-01 | S1 | AC-06; TEST-06 bcrypt and log inspection. |
+| NFR-04 | F-05/F-08 | S1 | AC-11; TEST-11 UTC persistence/timezone behavior. |
+| NFR-05 | F-03/F-04/F-05 | S1 | Contract error-shape tables and TEST-16/TEST-20/TEST-32/TEST-42. |
+| NFR-06 | F-10 | S1 | M-01/M-02 plus complete AC/TEST matrix. |
+| NFR-07 | F-10 | S3 | N-07 planned secret/deployment/recovery verification. |
 
 ## Coverage gaps and approved changes
 
