@@ -4,6 +4,19 @@
 
 This STS is the shared AC-to-test index for the Sprint 1 contracts: F-01, F-02, F-03 (create, browse, and edit), F-04, F-05, F-06, and F-07. Detailed test rows remain in their owning feature contract. F-11 remains the S1-01 reminder/schedule placeholder. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
 
+## S1-10 actual execution results
+
+The commands below were run from `sprint-1-staging` at tested commit **`7620242`** (`F-11: Implement Activity Template Editing for Managers (#27)`). Raw full outputs are committed under `docs/evidence/`. The evidence files were added after the test run; the docs-only commit does not change the tested code.
+
+| Command | Result | Counts | Evidence |
+|---|---|---|---|
+| `npm run build` | PASS | API and web builds completed | `docs/evidence/sprint1-build-7620242.log` |
+| `npm run test:unit` | PASS | 4 suites, 8 tests passed; 0 failed, 0 skipped | `docs/evidence/sprint1-test-unit-7620242.log` |
+| `npm run test:api` | PASS | 8 suites, 44 tests passed; 0 failed, 0 skipped | `docs/evidence/sprint1-test-api-7620242.log` |
+| `npm run test:e2e` | PASS | 3 tests passed; 0 failed, 0 skipped | `docs/evidence/sprint1-test-e2e-7620242.log` |
+
+The E2E set covers the shell, authentication/logout, and the persisted manager-to-participant journey including duplicate daily-entry rejection. No required test was weakened or skipped. The API/database suite used the real local PostgreSQL test database.
+
 ## Baseline alignment
 
 S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-11` and `FR-16` remain planned for Sprint 3 as recorded in the merged baseline. The S1-02 task wording that places FR-16 in Sprint 1 is not adopted because no approved change has amended S1-01. This Part A contract does not implement or renumber F-11.
@@ -67,6 +80,13 @@ S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-
 |---|---|---|
 | M-01 | Inspect repository, `.gitignore`, environment examples, logs, and test output for passwords, tokens, session secrets, or production credentials. | No real secrets are committed, displayed, or logged. |
 | M-02 | Start from a clean checkout, follow the documented setup/migration/seed commands, and run the documented build/test commands. | Setup is reproducible; migration and seed complete; build/tests run without undocumented local state. |
+
+### S1-10 actual manual results
+
+| ID | Result | Evidence/notes |
+|---|---|---|
+| M-01 | PASS | Reviewed tracked files, `.gitignore`, `.env.example`, generated logs, and test output. No real secrets, passwords, session tokens, or production credentials were committed or logged. Seed credentials are referenced only through local `SEED_DEMO_PASSWORD`. |
+| M-02 | PASS | On staging commit `7620242`, PostgreSQL was started, migrations and seed completed, and the documented build/unit/API/database/E2E commands completed with the counts recorded above. |
 
 ## Critical journey coverage
 
