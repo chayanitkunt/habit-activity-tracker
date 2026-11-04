@@ -1,6 +1,6 @@
 # Habit & Activity Tracker
 
-Sprint 1 foundation for the CPE334 Habit and Activity Tracking System. This setup supplies API and web shells, PostgreSQL tooling, and smoke-test harnesses; it intentionally contains no Sprint 1 feature endpoints.
+Sprint 1 implementation for the CPE334 Habit and Activity Tracking System. The selected context is study habits (Theme 8). Participants create personal total-period goals, record one valid activity per goal/day, and review private progress/history. Program Managers maintain the shared activity-template catalog but cannot access participant goals, records, progress, or history.
 
 ## Prerequisites
 
@@ -42,6 +42,29 @@ current-user endpoint is available at both `/api/auth/me` and the baseline-compa
 
 Registration, password reset, rate limiting, and CSRF tokens beyond the SameSite cookie policy
 are outside the S1-04 scope and remain known limitations.
+
+## Sprint 1 demo sequence
+
+Use a local seeded database only. Do not publish the configured `SEED_DEMO_PASSWORD`; each seeded account uses the password from the local `.env` file.
+
+1. Start PostgreSQL, apply migrations, and seed the local database:
+
+   ```sh
+   docker compose up -d --wait postgres
+   npm run migrate
+   npm run seed
+   ```
+
+2. Start the API and web client with `npm run dev` and `npm --workspace web run dev`.
+3. Sign in as `pm1@example.com` and create a study template, for example `Reading Pages`, unit `pages`, minimum `0`, and maximum `100`.
+4. Log out. Sign in as `alice@example.com`, select `Reading Pages`, create a goal with target `100`, and choose a start/end calendar date that is today or earlier in `APP_TIMEZONE`.
+5. Record `50` for the selected goal and date. Confirm the page shows `50.0%` progress and one history row.
+6. Submit another record for the same goal and date. Confirm the request is rejected with the duplicate-entry message (`409 DUPLICATE_DAILY_RECORD`) and the original record remains unchanged.
+7. Stop and restart the API/web processes, sign in again as Alice, and confirm the goal, `50.0%` progress, and history row persist.
+8. Verify the forbidden operation: while signed in as Alice, no template edit control is shown. If the API is called directly, `PATCH /api/templates/:id` returns `403 ROLE_FORBIDDEN` and the template is unchanged.
+9. Log out and confirm the session is cleared.
+
+The manager and participant histories remain private. F-11/FR-16 is still the Sprint 3 reminder/schedule placeholder; Sprint 1 sends no notifications.
 
 ## Run and verify
 
