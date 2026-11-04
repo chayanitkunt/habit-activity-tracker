@@ -22,13 +22,13 @@ S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-
 | TEST-07 | AC-07 | API/database integration | Successful login over configured environment. | Inspect `Set-Cookie`. | `HttpOnly`, `SameSite=Lax`, `Secure` outside local development, correct expiry. |
 | TEST-08 | AC-08 | API/database integration | Participant owns a valid goal; date is in period; quantity is in range. | POST one record, then GET records. | 201 and the same persisted record is returned. |
 | TEST-09 | AC-09 | API validation/authorization | Program Manager session and participant goal. | POST record for that goal. | 403 `ROLE_FORBIDDEN`; no record stored. |
-| TEST-10 | AC-10 | API validation/authorization | Participant A session; Participant B goal. | POST record using B's goal ID. | 404 privacy-safe denial; no record or B data exposed. |
+| TEST-10 | AC-10 | API validation/authorization | Participant A session; Participant B goal. | POST record using B's goal ID. | 404 `GOAL_NOT_FOUND`; no record or B data exposed. |
 | TEST-11 | AC-11 | API validation/authorization | Goal is active; tomorrow is generated in `Asia/Bangkok`. | POST record with future date. | 400 `INVALID_ACTIVITY_DATE`. |
-| TEST-12 | AC-12 | API validation/authorization | Goal has inclusive start/end dates. | POST before start and after end. | Each request returns 400; no row stored. |
-| TEST-13 | AC-13 | API validation/authorization | Template range is inclusive `[0, 500]`. | Submit 0, 500, -0.01, and 500.01. | Boundary values accepted; outside values rejected with 400. |
+| TEST-12 | AC-12 | API validation/authorization | Goal has inclusive start/end dates. | POST before start and after end. | Each request returns 400 `INVALID_ACTIVITY_DATE`; no row stored. |
+| TEST-13 | AC-13 | API validation/authorization | Template range is inclusive `[0, 500]`. | Submit 0, 500, -0.01, and 500.01. | Boundary values accepted; outside values rejected with 400 `INVALID_QUANTITY`. |
 | TEST-14 | AC-14 | API/database integration | One record already exists for goal/date. | POST a second quantity for same goal/date. | 409 `DUPLICATE_DAILY_RECORD`; first quantity unchanged. |
 | TEST-15 | AC-15 | Database integration | Two goals use the same template and date. | POST one record to each goal. | Both inserts succeed and remain independently queryable. |
-| TEST-16 | AC-16 | API validation/authorization | Bad date syntax and non-numeric quantity. | POST malformed payloads. | 400 stable error shape; no partial insert. |
+| TEST-16 | AC-16 | API validation/authorization | Bad date syntax and non-numeric quantity. | POST malformed payloads. | 400 `INVALID_ACTIVITY_DATE` or `INVALID_QUANTITY`; no partial insert. |
 | TEST-17 | AC-17 | API/database integration | Manager session and active template. | PATCH allowed metadata. | 200; reload shows persisted update. |
 | TEST-18 | AC-18 | API validation/authorization | Participant session and shared template. | PATCH template metadata. | 403 `ROLE_FORBIDDEN`; template unchanged. |
 | TEST-19 | AC-19 | API/database integration | Existing template has unit `pages`. | PATCH with `unit: "hours"` or same unit. | 400 `UNIT_IMMUTABLE`; stored unit remains `pages`. |

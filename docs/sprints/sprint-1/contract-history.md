@@ -7,9 +7,9 @@ This log records the actual merge commit for each contract. A row is added only 
 | 2026-11-04 | 9f16bde | `conventions.md` | Shared error/status/check-order contract merged before S1-03. |
 | 2026-11-04 | 9f16bde | F-02 access-control contract | Specification merged before F-02 implementation. |
 | 2026-11-04 | 9f16bde | F-03 create/browse contracts | Specification merged before F-03 implementation; edit contract remains S1-02A. |
-| 2026-11-06 | 9f16bde | F-04 create-goal contract | Specification merged before F-04 implementation. |
-| 2026-11-06 | 9f16bde | F-06/F-07 progress-history contract | Specification merged before F-06 implementation. |
-| 2026-11-06 | 9f16bde | `dod.md` and history log | Product completion/evidence standard merged with S1-02B. |
+| 2026-11-04 | 9f16bde | F-04 create-goal contract | Specification merged before F-04 implementation. |
+| 2026-11-04 | 9f16bde | F-06/F-07 progress-history contract | Specification merged before F-06 implementation. |
+| 2026-11-04 | 9f16bde | `dod.md` and history log | Product completion/evidence standard merged with S1-02B. |
 | 2026-11-04 | Pending merge | Clarified manager goal access, malformed-ID/unknown-route behavior, test levels, and validator unit coverage | Locks Manager goal endpoints to 403 before ownership lookup; distinguishes malformed IDs (400) from missing/inaccessible IDs (404); adds validator unit tests; aligns test levels in F-01, F-03-edit, F-05, and `sts.md` with shared conventions. |
 
 ## Recording procedure
