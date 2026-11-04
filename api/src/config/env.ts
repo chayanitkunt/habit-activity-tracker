@@ -1,16 +1,13 @@
 import dotenv from 'dotenv';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
-// Load .env from current working directory
 dotenv.config();
 
-// Also check project root .env if running from inside api/ or another subdirectory
-const rootEnvPath = resolve(fileURLToPath(new URL('../../../.env', import.meta.url)));
-if (existsSync(rootEnvPath)) {
-  dotenv.config({ path: rootEnvPath });
-}
+// Workspace commands execute with api/ as their working directory, while the
+// documented environment file lives at the repository root.
+const rootEnvPath = resolve(process.cwd(), '../.env');
+if (existsSync(rootEnvPath)) dotenv.config({ path: rootEnvPath });
 
 export interface AppConfig {
   sessionSecret: string;
