@@ -1,0 +1,2 @@
+export interface HistoryRecord { id: string; activity_date: string; quantity: number; }
+export const HistoryTable = ({ records }: { records: HistoryRecord[] }) => records.length ? <table><thead><tr><th>Date</th><th>Activity</th></tr></thead><tbody>{records.map((record) => <tr key={record.id}><td>{record.activity_date}</td><td>{record.quantity}</td></tr>)}</tbody></table> : <p>No activity recorded yet — 0%.</p>;

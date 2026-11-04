@@ -1,0 +1,1 @@
+export const ProgressBar = ({ percent }: { percent: number }) => <div aria-label="Goal progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}><span style={{ display: 'inline-block', width: `${percent}%` }} />{percent.toFixed(1)}%</div>;
