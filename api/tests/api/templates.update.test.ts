@@ -45,7 +45,7 @@ describe('F-11 template editing', () => {
   it('TEST-21 / S1-09 TEST-11.5 / AC-21 range update leaves existing records intact', async () => {
     const id = (await template()).id; const participant = await login('participant@example.com');
     const goal = await participant.post('/api/goals').send({ template_id: id, target: 10, start_date: '2026-11-01', end_date: '2026-11-01' }).expect(201);
-    await participant.post(`/api/goals/${goal.body.goal.id}/records`).send({ quantity: 5, record_date: '2026-11-01' }).expect(201);
+    await participant.post(`/api/goals/${goal.body.goal.id}/records`).send({ quantity: 5, activity_date: '2026-11-01' }).expect(201);
     await (await login('pm@example.com')).patch(`/api/activity-templates/${id}`).send({ min_value: 2, max_value: 100 }).expect(200);
     const records = await participant.get(`/api/goals/${goal.body.goal.id}/records`).expect(200);
     expect(records.body.records).toHaveLength(1);
