@@ -1,5 +1,7 @@
+import dotenv from 'dotenv';
 import { expect, test } from '@playwright/test';
 
+dotenv.config();
 const demoPassword = process.env.SEED_DEMO_PASSWORD || 'replace-with-a-local-demo-password';
 
 test('TEST-01.8 / AC-01.1: participant can log in and log out in the browser', async ({ page }) => {
@@ -8,6 +10,7 @@ test('TEST-01.8 / AC-01.1: participant can log in and log out in the browser', a
   await page.getByLabel('Password').fill(demoPassword);
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect(page.getByRole('heading', { name: 'Study habits dashboard' })).toBeVisible();
+  await expect(page).toHaveURL(/\/participant$/);
   await page.getByRole('button', { name: 'Logout' }).click();
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
 });

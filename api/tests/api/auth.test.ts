@@ -8,7 +8,7 @@ const password = 'test-password';
 let pool: Pool;
 
 const seedUsers = async (): Promise<void> => {
-  const passwordHash = await bcrypt.hash(password, 4);
+  const passwordHash = await bcrypt.hash(password, 12);
   await pool.query(
     `INSERT INTO users (email, password_hash, role)
      VALUES ($1, $2, 'program_manager'), ($3, $2, 'participant'), ($4, $2, 'participant')`,
@@ -46,9 +46,10 @@ describe('F-01 authentication and current user', () => {
   it('TEST-01.3 / AC-01.3 returns the current user and rejects the session after logout', async () => {
     const agent = request.agent(createApp(pool));
     await agent.post('/api/auth/login').send({ email: 'alice@example.com', password }).expect(200);
+    await agent.get('/api/me').expect(200);
     await agent.get('/api/auth/me').expect(200);
     await agent.post('/api/auth/logout').expect(204);
-    await agent.get('/api/auth/me').expect(401);
+    await agent.get('/api/me').expect(401);
   });
 
   it('TEST-01.4 / AC-01.4 rejects a protected request without a session', async () => {
@@ -58,7 +59,7 @@ describe('F-01 authentication and current user', () => {
   });
 
   it('TEST-01.5 / AC-01.5 rejects a deactivated account with the generic credential error', async () => {
-    const passwordHash = await bcrypt.hash(password, 4);
+    const passwordHash = await bcrypt.hash(password, 12);
     await pool.query('INSERT INTO users (email, password_hash, role, is_active) VALUES ($1, $2, $3, false)', ['disabled@example.com', passwordHash, 'participant']);
     const disabled = await request(createApp(pool)).post('/api/auth/login').send({ email: 'disabled@example.com', password });
     const unknown = await request(createApp(pool)).post('/api/auth/login').send({ email: 'missing@example.com', password });
@@ -69,6 +70,7 @@ describe('F-01 authentication and current user', () => {
   it('TEST-01.6 / AC-01.6 stores bcrypt hashes rather than plaintext passwords', async () => {
     const row = (await pool.query('SELECT password_hash FROM users WHERE email = $1', ['alice@example.com'])).rows[0];
     expect(row.password_hash).toMatch(/^\$2[aby]\$\d{2}\$/);
+    expect(Number(row.password_hash.slice(4, 6))).toBeGreaterThanOrEqual(12);
     expect(row.password_hash).not.toBe(password);
   });
 
