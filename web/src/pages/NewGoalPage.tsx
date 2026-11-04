@@ -18,13 +18,13 @@ export const NewGoalPage = ({ onCreated }: { onCreated?: () => void }) => {
       setMessage('Goal created.'); setTarget(''); onCreated?.();
     } catch { setMessage('Unable to create goal. Please try again.'); } finally { setSaving(false); }
   };
-  return <section aria-label="Create personal goal"><h2>Create personal goal</h2>
-    {loading ? <p aria-busy="true">Loading activity templates…</p> : <TemplateSelector templates={templates} onSelect={setSelected} />}
-    {selected && <p role="status">Selected: {selected.name} ({selected.unit}), range {selected.min_value}–{selected.max_value}</p>}
+  return <section className="card" aria-label="Create personal goal"><h2>Create personal goal</h2>
+    {loading ? <p aria-busy="true">Loading activity templates…</p> : <TemplateSelector templates={templates} onSelect={setSelected} selectedId={selected?.id} />}
+    {selected && <p className="muted" role="status">Selected: {selected.name} ({selected.unit}), range {selected.min_value}–{selected.max_value}</p>}
     <form onSubmit={submit}>
       <label>Target<input type="number" min="0" step="any" value={target} onChange={(event) => setTarget(event.target.value)} required /></label>{errors.target && <p role="alert">{errors.target}</p>}
-      <label>Start date<input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} required /></label>{errors.start_date && <p role="alert">{errors.start_date}</p>}
-      <label>End date<input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} required /></label>{errors.end_date && <p role="alert">{errors.end_date}</p>}
+      <div className="field-row"><label>Start date<input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} required /></label>
+      <label>End date<input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} required /></label></div>{errors.start_date && <p role="alert">{errors.start_date}</p>}{errors.end_date && <p role="alert">{errors.end_date}</p>}
       {errors.template_id && <p role="alert">{errors.template_id}</p>}{message && <p role={Object.keys(errors).length ? 'alert' : 'status'}>{message}</p>}
       <button type="submit" disabled={saving || !selected}>{saving ? 'Saving…' : 'Create goal'}</button>
     </form>

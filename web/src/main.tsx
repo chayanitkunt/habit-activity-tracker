@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import './styles.css';
 import { currentUser, type User } from './auth/authApi';
 import { ProtectedRoute } from './auth/ProtectedRoute';
 import { Header } from './components/Header';
@@ -22,12 +23,14 @@ const App = () => {
     setUser(null);
   };
   useEffect(() => { currentUser().then((nextUser) => { if (nextUser) redirectForRole(nextUser); }).finally(() => setLoading(false)); }, []);
-  if (loading) return <main aria-busy="true">Loading your session…</main>;
+  if (loading) return <main className="container" aria-busy="true">Loading your session…</main>;
   if (!user) return <LoginPage onSuccess={redirectForRole} />;
   return <ProtectedRoute user={user} loading={loading} onUnauthenticated={() => setUser(null)}>
     <Header user={user!} onLogout={signOut} />
-    <TemplatesPage user={user!} />
-    {user!.role === 'participant' && <><NewGoalPage onCreated={() => setGoalRefresh((value) => value + 1)} /><GoalsPage refreshKey={goalRefresh} /></>}
+    <main className="container stack">
+      {user!.role === 'participant' && <GoalsPage refreshKey={goalRefresh}><NewGoalPage onCreated={() => setGoalRefresh((value) => value + 1)} /></GoalsPage>}
+      <TemplatesPage user={user!} />
+    </main>
   </ProtectedRoute>;
 };
 

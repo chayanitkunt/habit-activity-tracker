@@ -29,7 +29,7 @@ export const RecordForm = ({ goalId, minValue, maxValue, unit, onSaved }: { goal
   };
 
   return <form onSubmit={submit} aria-label="Record daily activity">
-    <p>Valid range: {minValue}–{maxValue} {unit}</p>
+    <p className="muted">Valid range: {minValue}–{maxValue} {unit}</p>
     <label>Activity value<input type="number" min={minValue} max={maxValue} step="any" value={quantity} onChange={(event) => setQuantity(event.target.value)} required /></label>
     {errors.quantity && <p role="alert">{errors.quantity}</p>}
     <label>Record date<input type="date" value={activityDate} onChange={(event) => setActivityDate(event.target.value)} required /></label>
