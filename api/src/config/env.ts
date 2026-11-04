@@ -27,7 +27,9 @@ const required = (name: string): string => {
 };
 
 export const loadConfig = (): AppConfig => {
-  const sessionMaxAgeHours = Number(required('SESSION_MAX_AGE_HOURS'));
+  const sessionTtl = process.env.SESSION_TTL?.trim() || process.env.SESSION_MAX_AGE_HOURS?.trim();
+  if (!sessionTtl) throw new Error('Missing required environment variable: SESSION_TTL');
+  const sessionMaxAgeHours = Number(sessionTtl);
   if (!Number.isInteger(sessionMaxAgeHours) || sessionMaxAgeHours <= 0) {
     throw new Error('SESSION_MAX_AGE_HOURS must be a positive integer.');
   }

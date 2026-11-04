@@ -31,7 +31,17 @@ With Docker Compose, ensure the separate test database exists (safe to repeat):
 docker compose exec -T postgres sh -c "psql -U habit -d habit_tracker -tAc \"SELECT 1 FROM pg_database WHERE datname = 'habit_tracker_test'\" | grep -q 1 || createdb -U habit habit_tracker_test"
 ```
 
-`DATABASE_URL` identifies the development database and `TEST_DATABASE_URL` identifies the isolated database erased by the migration smoke test. Never point the test URL to data you need. Required application variables are `SESSION_SECRET`, `DATABASE_URL`, `SESSION_MAX_AGE_HOURS`, `APP_TIMEZONE`, and `SEED_DEMO_PASSWORD`; startup fails fast if they are absent or invalid.
+`DATABASE_URL` identifies the development database and `TEST_DATABASE_URL` identifies the isolated database erased by the migration smoke test. Never point the test URL to data you need. Required application variables are `SESSION_SECRET`, `DATABASE_URL`, `SESSION_TTL`, `APP_TIMEZONE`, and `SEED_DEMO_PASSWORD`; startup fails fast if they are absent or invalid.
+
+## Sprint 1 authentication
+
+The seeded users are `pm1@example.com`, `alice@example.com`, and `bob@example.com`; all use
+the configured `SEED_DEMO_PASSWORD`. Authentication uses server-side sessions with hashed
+opaque tokens and a 24-hour default lifetime. Login and logout are under `/api/auth`; the
+current-user endpoint is available at both `/api/auth/me` and the baseline-compatible `/api/me`.
+
+Registration, password reset, rate limiting, and CSRF tokens beyond the SameSite cookie policy
+are outside the S1-04 scope and remain known limitations.
 
 ## Run and verify
 
