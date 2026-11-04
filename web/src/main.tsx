@@ -18,7 +18,8 @@ const App = () => {
     setUser(null);
   };
   useEffect(() => { currentUser().then((nextUser) => { if (nextUser) redirectForRole(nextUser); }).finally(() => setLoading(false)); }, []);
-  if (!loading && !user) return <LoginPage onSuccess={redirectForRole} />;
+  if (loading) return <main aria-busy="true">Loading your session…</main>;
+  if (!user) return <LoginPage onSuccess={redirectForRole} />;
   return <ProtectedRoute user={user} loading={loading} onUnauthenticated={() => setUser(null)}>
     <Header user={user!} onLogout={signOut} />
     <main><h1>{user!.role === 'program_manager' ? 'Program Manager dashboard' : 'Study habits dashboard'}</h1><p>Authentication is ready. Activity goals and records will appear here in the next feature.</p></main>

@@ -19,10 +19,14 @@ export const login = async (email: string, password: string): Promise<User> => {
 };
 
 export const currentUser = async (): Promise<User | null> => {
-  const response = await fetch('/api/auth/me', { credentials: 'include' });
-  if (response.status === 401) return null;
-  const body = await parseResponse(response);
-  return body.user ?? null;
+  try {
+    const response = await fetch('/api/auth/me', { credentials: 'include' });
+    if (response.status === 401) return null;
+    const body = await parseResponse(response);
+    return body.user ?? null;
+  } catch {
+    return null;
+  }
 };
 
 export const logout = async (): Promise<void> => {
