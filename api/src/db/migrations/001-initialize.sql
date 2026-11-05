@@ -1,2 +1,2 @@
--- The migration ledger is created by the runner. This establishes an empty-database workflow before feature-owned schemas arrive.
+-- The migration ledger is created by the runner. Schema migrations and the explicit `npm run seed` command provide the local demo data.
 SELECT 1;

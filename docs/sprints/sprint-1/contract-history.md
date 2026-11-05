@@ -10,11 +10,11 @@ This log records the actual merge commit for each contract. A row is added only 
 | 2026-11-04 | 9f16bde | F-04 create-goal contract | Specification merged before F-04 implementation. |
 | 2026-11-04 | 9f16bde | F-06/F-07 progress-history contract | Specification merged before F-06 implementation. |
 | 2026-11-04 | 9f16bde | `dod.md` and history log | Product completion/evidence standard merged with S1-02B. |
-| 2026-11-04 | Pending merge | Clarified manager goal access, malformed-ID/unknown-route behavior, test levels, and validator unit coverage | Locks Manager goal endpoints to 403 before ownership lookup; distinguishes malformed IDs (400) from missing/inaccessible IDs (404); adds validator unit tests; aligns test levels in F-01, F-03-edit, F-05, and `sts.md` with shared conventions. |
+| 2026-11-04 | 231c6b6 | Clarified manager goal access, malformed-ID/unknown-route behavior, test levels, and validator unit coverage | Merged by GitHub as PR #9. Locks Manager goal endpoints to 403 before ownership lookup; distinguishes malformed IDs (400) from missing/inaccessible IDs (404); adds validator unit tests; aligns test levels in F-01, F-03-edit, F-05, and `sts.md` with shared conventions. |
 
 ## Recording procedure
 
-After each merge to `sprint-1-staging`, update the corresponding `Pending merge` cell with that PR's merge commit hash in a separate documentation commit. Preserve the row date, describe any scope change, and state its justification. This follow-up is evidence logging; it must not alter an already approved contract silently.
+The repeated `9f16bde` values are intentional: it is the GitHub merge commit for PR #7, which merged the shared Part A/B contract set in one pull request. The final follow-up is GitHub merge commit `231c6b6` for PR #9.
 
 ## Reserved IDs
 

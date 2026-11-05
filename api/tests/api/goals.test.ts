@@ -38,6 +38,13 @@ describe('F-04 create personal goal', () => {
     expect(response.body.goal).toEqual(expect.objectContaining({ template_id: templateId, target: 30, start_date: '2026-11-04', end_date: '2026-11-04' }));
   });
 
+  it('TEST-04.1 permits a total-period target above the one-day template maximum', async () => {
+    const agent = await login('alice@example.com');
+    const response = await agent.post('/api/goals').send({ template_id: templateId, target: 1000, start_date: '2026-11-04', end_date: '2026-11-04' });
+    expect(response.status).toBe(201);
+    expect(response.body.goal.target).toBe(1000);
+  });
+
   it('TEST-04.2 / AC-04.2 rejects invalid target/date values', async () => {
     const agent = await login('alice@example.com');
     await agent.post('/api/goals').send({ template_id: templateId, target: 0, start_date: '2026-11-04', end_date: '2026-11-04' }).expect(400);
