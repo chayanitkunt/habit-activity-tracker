@@ -11,7 +11,7 @@
 | F-07 | History and progress views | FR-08, FR-11, FR-13, FR-15 | F-04, F-05, F-06 | S1 |
 | F-08 | Shared validation and API error contract | FR-07, FR-12, BR-06, BR-07, BR-08, BR-09, NFR-05 | API middleware and timezone library | S1 |
 | F-09 | Study dashboard UI | FR-04, FR-06, FR-09, FR-15 | F-03–F-08 | S1 |
-| F-10 | Testable deployment/security baseline | NFR-03, NFR-04, NFR-06, NFR-07 | CI, environment configuration | S1–S3 |
+| F-10 | Testable deployment/security baseline | NFR-03, NFR-04, NFR-06, NFR-07 | Local test/coverage tooling, environment configuration; CI is Lab 5 work | S1–S3 |
 | F-11 | Reminder/schedule placeholder representation | FR-16, BR-11, AD-15, AD-17 | F-02; no notification provider | S3 |
 
 F-11 scope is recorded from the Thursday workshop in SRS decision AD-17: representation and future acceptance criteria only; no notifications are sent.

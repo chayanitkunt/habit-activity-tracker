@@ -30,7 +30,7 @@ Out of scope: medical diagnosis, treatment advice, clinical interpretation, noti
 | FR-04 | An authenticated user shall list active templates; template unit shall be read-only to users after creation. | API tests for list and PATCH rejection of `unit`. | S1 |
 | FR-05 | A Program Manager shall update permitted template fields without changing its unit. | Role and PATCH contract tests. | S1 |
 | FR-06 | A Participant shall create a goal for a selected template with target, start date, and end date. | Goal creation acceptance test. | S1 |
-| FR-07 | The system shall reject a goal whose target is outside the template range, non-positive, or whose dates are invalid. | Boundary and invalid-input tests. | S1 |
+| FR-07 | The system shall reject a goal whose total-period target is non-positive or whose dates are invalid. The template range constrains each daily record, not the cumulative goal target. | Boundary and invalid-input tests. | S1 |
 | FR-08 | A Participant shall list and retrieve only their own goals. | Cross-participant authorization test. | S1 |
 | FR-09 | A Participant shall record a daily activity value for their goal. | Record creation test with valid input. | S1 |
 | FR-10 | The system shall enforce one entry per goal per calendar day, rejecting duplicates without overwriting the original. | Duplicate-record test and database constraint test. | S1 |
@@ -45,7 +45,7 @@ Out of scope: medical diagnosis, treatment advice, clinical interpretation, noti
 
 | ID | Rule | Verification | Sprint |
 |---|---|---|---|
-| BR-01 | A goal target is the total quantity expected over the whole goal period, not a daily target. | SRS/API calculation test. | S1 |
+| BR-01 | A goal target is the total quantity expected over the whole goal period, not a daily target; template min/max constrain each daily record only. | SRS/API calculation test. | S1 |
 | BR-02 | Progress is `total recorded quantity / target * 100`. | Calculation unit test. | S1 |
 | BR-03 | Progress is rounded to one decimal place using half-up rounding and capped at 100. | Values ending in 0.05 and over-target tests. | S1 |
 | BR-04 | There is at most one record per goal per calendar day. A duplicate is rejected; the existing record is never overwritten. | Unique-constraint and API test. | S1 |
@@ -66,7 +66,7 @@ Out of scope: medical diagnosis, treatment advice, clinical interpretation, noti
 | NFR-03 | Passwords shall be stored only as bcrypt hashes with cost factor 12 or stronger; plaintext passwords shall not be logged. | Configuration/code review and test. | S1 |
 | NFR-04 | The service shall use UTC timestamps for persistence while interpreting user-entered calendar dates in configured `APP_TIMEZONE`. | Time-zone tests and schema review. | S1 |
 | NFR-05 | API validation errors shall use one documented JSON error shape and stable machine-readable codes. | Contract tests. | S1 |
-| NFR-06 | Automated tests shall cover ≥ 90% of Sprint 1 service/domain rules and all endpoint permission cases. | CI coverage report and test review. | S1 |
+| NFR-06 | Automated tests shall cover ≥ 90% of Sprint 1 service/domain rules and all endpoint permission cases. | Local coverage run and test review; CI is Lab 5 work. | S1 |
 | NFR-07 | A production deployment shall keep secrets out of source control and use managed secret injection; target recovery point is ≤ 24 h and recovery time objective ≤ 4 h. | Deployment checklist and restore exercise. | S3 |
 
 ### 7. Assumptions
@@ -99,6 +99,7 @@ Out of scope: medical diagnosis, treatment advice, clinical interpretation, noti
 | AD-15 | Reminders are represented as placeholders only; no notifications are sent. | Schedule design can evolve without operational side effects. | Approved |
 | AD-16 | Use bcrypt-backed password verification and expiring server-side sessions. | Reduces credential and token exposure. | Approved |
 | AD-17 | TA Thursday workshop answer for F-11: F-11 is limited to reminder/schedule representation and acceptance criteria; notification delivery, channels, and user opt-in are later-sprint work. | Records the scope decision and keeps S1 feasible. | Approved — Thursday workshop |
+| AD-18 | Template min/max values constrain one daily record; a goal target is a separate period-total and is not capped by that range. | A cumulative target must be able to exceed one day's permitted quantity. | Approved |
 
 ### 9. Open questions and resolution
 

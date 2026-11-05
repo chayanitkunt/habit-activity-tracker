@@ -2,7 +2,7 @@
 
 Execution result for both excerpts: API suite passed `44/44` on tested commit `7620242`; full output is in `sprint1-test-api-7620242.log`.
 
-## Domain rule: duplicate daily record - BR-07 / TEST-05.4 / AC-05.4
+## Domain rule: duplicate daily record - BR-04 / TEST-14 / AC-14
 
 Source: `api/tests/api/records.test.ts`.
 
@@ -16,7 +16,7 @@ it('TEST-05.4 / AC-05.4 maps duplicate records to 409 and database rejects a dir
 });
 ```
 
-The same file also asserts the concurrent result:
+The source code retains its feature-local label `TEST-05.4 / AC-05.4`; the canonical STS mapping is `TEST-14 / AC-14`. The same file also asserts the concurrent result:
 
 ```ts
 const responses = await Promise.all([1, 2].map(() => alice.post(`/api/goals/${aliceGoalId}/records`).send({ activity_date: today, quantity: 25 })));
@@ -25,7 +25,7 @@ expect(responses.map((response) => response.status).sort()).toEqual([201, 409]);
 
 Test-design commit: `7f3f6a3` (`test(F-05): add failing record tests (AC-05.1..05.8)`). Implementation commits: `0ea95c1`, `e1707e6`; merged by PR #20 at `f65eff3`. The raw historical red/green run is preserved in `red-green-F05.log.md`.
 
-## Ownership restriction - TEST-04.6 / AC-04.6
+## Ownership restriction - TEST-29 / AC-26
 
 Source: `api/tests/api/goals.test.ts`.
 
@@ -36,7 +36,7 @@ it('TEST-04.6 / AC-04.6 hides another participant goal with 404', async () => {
 });
 ```
 
-This proves that Alice cannot retrieve Bob's private goal by ID. The same API suite contains the role restriction for a Manager:
+The source code retains its feature-local label `TEST-04.6 / AC-04.6`; the canonical STS mapping is `TEST-29 / AC-26`. This proves that Alice cannot retrieve Bob's private goal by ID. The same API suite contains the role restriction for a Manager:
 
 ```ts
 it('TEST-04.5 / AC-04.5 rejects Program Manager goal creation', async () => {

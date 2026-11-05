@@ -3,6 +3,7 @@
 These items are intentionally disclosed and are not presented as completed Sprint 1 behavior:
 
 - No registration, password reset, rate limiting or CSRF tokens beyond the SameSite cookie policy.
+- Automated-test gaps: AC-02a and AC-43 have no test; AC-06 does not inspect logs; AC-07 does not verify `Secure` or cookie expiry. AC-34, AC-38, AC-44, and AC-50 have build/selected-E2E evidence only, not automated component tests.
 - No goal or daily-record edit/delete in Sprint 1.
 - F-11/FR-16 remains the S1-01 Sprint 3 reminder/schedule placeholder; Sprint 1 sends no notifications.
 - Template unit remains immutable in Sprint 1. Further unit-lock and activation/deactivation UI refinements are deferred as stated by the contract.
