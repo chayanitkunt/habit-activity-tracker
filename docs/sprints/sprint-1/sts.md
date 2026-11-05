@@ -2,7 +2,7 @@
 
 ## Scope and test evidence
 
-This STS is the shared AC-to-test index for the Sprint 1 contracts: F-01, F-02, F-03 (create, browse, and edit), F-04, F-05, F-06, and F-07. Detailed test rows remain in their owning feature contract. F-11 remains the S1-01 reminder/schedule placeholder. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
+This STS is the shared AC-to-test index for the Sprint 1 contracts: F-01, F-02, F-03 (create, browse, and edit), F-04, F-05, F-06, and F-07. Detailed test rows remain in their owning feature contract. F-11 remains the S1-01 reminder/schedule placeholder. Tests were planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. The actual execution results, test file references, counts, and tested commit are recorded below.
 
 ## S1-10 actual execution results
 
