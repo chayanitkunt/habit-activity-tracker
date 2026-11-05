@@ -23,7 +23,7 @@ const responses = await Promise.all([1, 2].map(() => alice.post(`/api/goals/${al
 expect(responses.map((response) => response.status).sort()).toEqual([201, 409]);
 ```
 
-Test-design commit: `7f3f6a3` (`test(F-05): add failing record tests (AC-05.1..05.8)`). Implementation commits: `0ea95c1`, `e1707e6`; merged by PR #20 at `f65eff3`. A standalone raw red log for the earlier commit was not retained, so it is disclosed rather than represented as passing evidence.
+Test-design commit: `7f3f6a3` (`test(F-05): add failing record tests (AC-05.1..05.8)`). Implementation commits: `0ea95c1`, `e1707e6`; merged by PR #20 at `f65eff3`. The raw historical red/green run is preserved in `red-green-F05.log.md`.
 
 ## Ownership restriction - TEST-04.6 / AC-04.6
 
@@ -44,4 +44,4 @@ it('TEST-04.5 / AC-04.5 rejects Program Manager goal creation', async () => {
 });
 ```
 
-Test-design commit: `015f923` (`test(F-04): add failing goal tests`). Implementation commits: `db13132`, `e66cb9c`, `66a4575`; merged by PR #18 at `c05f258`. A standalone raw red log for the earlier commit was not retained.
+Test-design commit: `015f923` (`test(F-04): add failing goal tests`). Implementation commits: `db13132`, `e66cb9c`, `66a4575`; merged by PR #18 at `c05f258`. The raw historical run is preserved in `red-green-F04.log.md`; its red phase includes missing-schema/module setup failures and is disclosed as not clean assertion-only TDD evidence.

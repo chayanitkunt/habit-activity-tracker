@@ -13,4 +13,4 @@ Release code was tested before the release tag. The tagged release is `v0.1.0-sp
 | F-03 edit template | contract alignment `bc454cf` | `6337c49`, `95dc02a`, `bc454cf`, `2d1da88`, `be05bd2`, `d45b800` | Manager-only metadata update and contract/UI alignment; merged by PR #27 at `7620242` |
 | S1-10 release docs | — | `fea196a`, `d379929`, `e3222f4`, `5475faa` | Demo, test results and release integration |
 
-The repository does not preserve a separate raw red-log file for every feature. This report therefore identifies the recorded test-design commits without claiming unavailable red-output evidence.
+Raw red/green logs are preserved for the sampled F-04 and F-05 rule work in `docs/evidence/red-green-F04.log.md` and `red-green-F05.log.md`. A separate red log was not reconstructed for every feature, so no unavailable red output is claimed for the remaining features.
