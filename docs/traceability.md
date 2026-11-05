@@ -34,10 +34,10 @@
 | NFR-03 | F-01 | S1 | AC-06; TEST-06 bcrypt and log inspection. |
 | NFR-04 | F-05/F-08 | S1 | AC-11; TEST-11 UTC persistence/timezone behavior. |
 | NFR-05 | F-03/F-04/F-05 | S1 | Contract error-shape tables and TEST-16/TEST-20/TEST-32/TEST-42. |
-| NFR-06 | F-10 | S1 | M-01/M-02 plus complete AC/TEST matrix. |
+| NFR-06 | F-10 | S1 | Local coverage command/report plus service/domain and endpoint-permission test review. M-01/M-02 cover secrets and clean setup, not coverage. |
 | NFR-07 | F-10 | S3 | N-07 planned secret/deployment/recovery verification. |
 
 ## Coverage gaps and approved changes
 
-Coverage gaps: none for the approved Sprint 1 baseline. F-11 and NFR-01/NFR-07 are intentionally planned outside Sprint 1 and are mapped to their later sprint. Approved changes: AD-01 through AD-17 in `srs.md`; no unapproved requirement changes.
+Coverage gaps: AC-02a and AC-43 have no automated test. AC-06 covers bcrypt storage but not log inspection; AC-07 covers `HttpOnly` and `SameSite=Lax` but not `Secure` or expiry. AC-34, AC-38, AC-44, and AC-50 have no automated component test and rely on build/selected E2E evidence. F-11 and NFR-01/NFR-07 are intentionally planned outside Sprint 1 and are mapped to their later sprint. Approved changes: AD-01 through AD-18 in `srs.md`.
 

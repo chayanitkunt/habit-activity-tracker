@@ -6,7 +6,7 @@ Goal: deliver a secure, testable study-habit recording flow with private partici
 
 Features: F-01 through F-10 (with F-11 specified but deferred to S3).
 
-Dependencies: S1-00 repository/staging baseline; relational schema; authentication/session design; API and UI skeleton; CI database.
+Dependencies: S1-00 repository/staging baseline; relational schema; authentication/session design; API and UI skeleton; local PostgreSQL test database. CI is Lab 5 work.
 
 Completion outcome: SRS, feature inventory, traceability, SDS, API contracts, role matrix, migrations/seed approach, and a working vertical slice for login → template selection → goal → daily record → history/progress. All FR/BR/NFR IDs are mapped, duplicate records are rejected, dates use `APP_TIMEZONE`, and cross-participant/manager privacy tests pass.
 

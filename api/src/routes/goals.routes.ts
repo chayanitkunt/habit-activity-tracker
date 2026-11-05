@@ -21,10 +21,8 @@ export const createGoalsRouter = (pool: Pool, config: AppConfig): Router => {
         const code = typeof request.body?.template_id === 'string' && !isUuid(request.body.template_id) ? ErrorCode.INVALID_GOAL_ID : ErrorCode.INVALID_GOAL;
         throw new AppError(400, code, 'The goal is invalid.', validation.details);
       }
-      const template = await pool.query<{ id: string; is_active: boolean; min_value: number; max_value: number }>('SELECT id, is_active, min_value, max_value FROM activity_templates WHERE id = $1', [validation.value.template_id]);
+      const template = await pool.query<{ id: string; is_active: boolean }>('SELECT id, is_active FROM activity_templates WHERE id = $1', [validation.value.template_id]);
       if (!template.rowCount || !template.rows[0].is_active) throw new AppError(404, ErrorCode.TEMPLATE_NOT_FOUND, 'The activity template was not found.');
-      const range = template.rows[0];
-      if (validation.value.target < Number(range.min_value) || validation.value.target > Number(range.max_value)) throw new AppError(400, ErrorCode.INVALID_GOAL, 'The goal target is outside the template range.', { target: 'Target must be within the template range.' });
       const user = (request as AuthenticatedRequest).user!;
       const result = await pool.query(`INSERT INTO goals (participant_id, template_id, target, start_date, end_date) VALUES ($1, $2, $3, $4, $5) RETURNING ${goalColumns}`, [user.id, validation.value.template_id, validation.value.target, validation.value.start_date, validation.value.end_date]);
       response.status(201).json({ goal: mapGoal(result.rows[0]) });

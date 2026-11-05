@@ -8,4 +8,8 @@ describe('progress calculation', () => {
     expect(calculateProgress(30, [10])).toEqual({ totalRecorded: 10, percent: 33.3 });
     expect(calculateProgress(100, [50.05])).toEqual({ totalRecorded: 50.05, percent: 50.1 });
   });
+
+  it('rounds a decimal tie up despite binary floating-point representation', () => {
+    expect(calculateProgress(0.8, [0.09])).toEqual({ totalRecorded: 0.09, percent: 11.3 });
+  });
 });

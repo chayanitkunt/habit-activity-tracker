@@ -40,7 +40,7 @@ Request:
 Success: `200` with `Set-Cookie` and:
 
 ```json
-{ "user": { "id": "uuid", "email": "participant@example.test", "role": "PARTICIPANT" } }
+{ "user": { "id": "uuid", "email": "participant@example.test", "role": "participant" } }
 ```
 
 Malformed login requests: `400` with `INVALID_LOGIN_REQUEST`. Validly shaped requests with unknown email or wrong password: `401` with `INVALID_CREDENTIALS`; validation must not disclose which account detail was wrong.
@@ -57,7 +57,7 @@ Requires a valid session. Success: `204`, session revoked and cookie cleared. Mi
 
 `User.email` is normalized and unique. `User.password_hash` contains only a bcrypt hash with cost factor 12 or stronger. `Session` stores a hash of a random opaque session identifier, `user_id`, `created_at`, `expires_at`, and optional `revoked_at`; the raw session identifier is held only in the client cookie. The default session lifetime is 24 hours and is configurable through `SESSION_TTL`.
 
-The cookie is `HttpOnly`, `Secure` outside local development, `SameSite=Lax`, and scoped to the application. State-changing cookie requests require CSRF protection. Session lookup rejects revoked or expired sessions. Unexpected authentication failures return a generic server error without credential details.
+The cookie is `HttpOnly`, `Secure` outside local development, `SameSite=Lax`, and scoped to the application. CSRF protection is not implemented in Sprint 1. Session lookup rejects revoked or expired sessions. Unexpected authentication failures return a generic server error without credential details.
 
 Data migration: create or update the `User` and `Session` tables, the role enum, the normalized-email unique index, and session expiry/revocation fields. No activity-domain tables change for F-01.
 

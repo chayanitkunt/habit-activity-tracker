@@ -76,4 +76,4 @@ npm test
 npm run test:e2e # first run: npx playwright install
 ```
 
-`npm run migrate` applies SQL migrations transactionally. `npm run seed` is safe to repeat; demo data will arrive with feature-owned schema migrations. `.env` is ignored by Git. The API’s unknown-route response follows the Sprint 1 contract: `404 ROUTE_NOT_FOUND` in the standard error envelope.
+`npm run migrate` applies SQL migrations transactionally. `npm run seed` is safe to repeat and creates the local demo data. `.env` is ignored by Git. The API’s unknown-route response follows the Sprint 1 contract: `404 ROUTE_NOT_FOUND` in the standard error envelope.

@@ -2,7 +2,7 @@
 
 ## Scope and test evidence
 
-This STS is the shared AC-to-test index for the Sprint 1 contracts: F-01, F-02, F-03 (create, browse, and edit), F-04, F-05, F-06, and F-07. Detailed test rows remain in their owning feature contract. F-11 remains the S1-01 reminder/schedule placeholder. Tests are planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. Actual test file names, command output, pass/fail counts, and tested commit must be filled in when implementation exists; this document is the pre-implementation contract.
+This STS is the shared AC-to-test index for the Sprint 1 contracts: F-01, F-02, F-03 (create, browse, and edit), F-04, F-05, F-06, and F-07. Detailed test rows remain in their owning feature contract. F-11 remains the S1-01 reminder/schedule placeholder. Tests were planned at unit, API/integration, database, and selected UI/end-to-end levels. Each test records its precondition, action, and observable result. The actual execution results, test file references, counts, and tested commit are recorded below.
 
 ## S1-10 actual execution results
 
@@ -16,6 +16,8 @@ The commands below were run from `sprint-1-staging` at tested commit **`7620242`
 | `npm run test:e2e` | PASS | 3 tests passed; 0 failed, 0 skipped | `docs/evidence/sprint1-test-e2e-7620242.log` |
 
 The E2E set covers the shell, authentication/logout, and the persisted manager-to-participant journey including duplicate daily-entry rejection. No required test was weakened or skipped. The API/database suite used the real local PostgreSQL test database.
+
+The current working baseline adds a rounding regression and a cumulative-target regression. Its expected inventory is 9 unit tests, 45 API/database tests, and 3 E2E tests; it must be re-run and recorded at the commit that contains those changes rather than overwriting the historical `7620242` result.
 
 ## S1-03 to S1-09 integration confirmation
 
@@ -47,14 +49,15 @@ S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-
 | TEST-03 | AC-03 | API/database integration | Participant A session active. | GET `/api/me`. | 200 with A's safe identity only. |
 | TEST-04 | AC-04 | API validation/authorization | No cookie, revoked session, and expired session cases. | Call `/api/me` and a protected endpoint. | 401; no private response body. |
 | TEST-05 | AC-05 | API/database integration | Active session exists. | POST logout, then reuse cookie. | First response 204; subsequent protected call 401. |
-| TEST-06 | AC-06 | Unit | User created through seed/service. | Inspect stored password and captured logs. | bcrypt hash only; no plaintext password or credential log. |
-| TEST-07 | AC-07 | API/database integration | Successful login over configured environment. | Inspect `Set-Cookie`. | `HttpOnly`, `SameSite=Lax`, `Secure` outside local development, correct expiry. |
+| TEST-06 | AC-06 | API/database integration | Seeded user credentials. | Inspect stored password hash after seed/login setup. | bcrypt hash only. Log inspection is not automated. |
+| TEST-07 | AC-07 | API/database integration | Successful login over configured environment. | Inspect `Set-Cookie`. | `HttpOnly` and `SameSite=Lax`. `Secure` and expiry are not asserted by the current test. |
 | TEST-08 | AC-08 | API/database integration | Participant owns a valid goal; date is in period; quantity is in range. | POST one record, then GET records. | 201 and the same persisted record is returned. |
 | TEST-09 | AC-09 | API validation/authorization | Program Manager session and participant goal. | POST record for that goal. | 403 `ROLE_FORBIDDEN`; no record stored. |
 | TEST-10 | AC-10 | API validation/authorization | Participant A session; Participant B goal. | POST record using B's goal ID. | 404 `GOAL_NOT_FOUND`; no record or B data exposed. |
 | TEST-11 | AC-11 | API validation/authorization | Goal is active; tomorrow is generated in `Asia/Bangkok`. | POST record with future date. | 400 `INVALID_ACTIVITY_DATE`. |
 | TEST-12 | AC-12 | API validation/authorization | Goal has inclusive start/end dates. | POST before start and after end. | Each request returns 400 `INVALID_ACTIVITY_DATE`; no row stored. |
 | TEST-13 | AC-13 | API validation/authorization | Template range is inclusive `[0, 500]`. | Submit 0, 500, -0.01, and 500.01. | Boundary values accepted; outside values rejected with 400 `INVALID_QUANTITY`. |
+| TEST-13a | AC-13 | Unit | Template range `[0, 500]` and decimal validator. | Evaluate 0, 500, -0.01, and 500.01 without HTTP/database dependencies. | Validator accepts inclusive bounds and rejects outside values. |
 | TEST-14 | AC-14 | API/database integration | One record already exists for goal/date. | POST a second quantity for same goal/date. | 409 `DUPLICATE_DAILY_RECORD`; first quantity unchanged. |
 | TEST-15 | AC-15 | Database integration | Two goals use the same template and date. | POST one record to each goal. | Both inserts succeed and remain independently queryable. |
 | TEST-16 | AC-16 | API validation/authorization | Bad date syntax and non-numeric quantity. | POST malformed payloads. | 400 `INVALID_ACTIVITY_DATE` or `INVALID_QUANTITY`; no partial insert. |
@@ -89,6 +92,22 @@ S1-01 is the source of truth for shared IDs and sprint allocation. Therefore `F-
 | F-06 progress calculation | AC-45–AC-47 | TEST-45–TEST-47 |
 | F-07 history/progress views | AC-48–AC-50 | TEST-48–TEST-50 |
 | F-11 | Sprint 3 reminder/schedule placeholder | Not a Sprint 1 implementation contract. |
+
+## Canonical-ID to implementation-name mapping
+
+The contracts and STS retain canonical `AC-01..50` / `TEST-01..50` identifiers. Source tests use feature-local names; this table prevents treating those names as a second contract ID set.
+
+| Canonical ID | Source test label / location |
+|---|---|
+| TEST-01..TEST-07 | `TEST-01.1`..`TEST-01.7` in `api/tests/api/auth.test.ts` |
+| TEST-08, TEST-13, TEST-14, TEST-16 | `TEST-05.1`, `.2`, `.4`, `.3/.7` in `api/tests/api/records.test.ts` |
+| TEST-09, TEST-10, TEST-15 | `TEST-05.8`, `.5`, and the same-template two-goal case in `api/tests/api/records.test.ts` |
+| TEST-13a | unlabeled inclusive-bounds unit case in `api/tests/unit/record.validator.test.ts` |
+| TEST-29 / AC-26 | `TEST-04.6 / AC-04.6` in `api/tests/api/goals.test.ts` |
+| TEST-39..TEST-42 | `TEST-04.1`, `.5`, `.7`, `.2` in `api/tests/api/goals.test.ts` |
+| TEST-17..TEST-22 | canonical labels (also prefixed `S1-09 TEST-11.x`) in `api/tests/api/templates.update.test.ts` |
+| TEST-31..TEST-38 | feature-local `TEST-03.x` labels in template create/list tests |
+| TEST-45..TEST-47 | unlabeled unit/API progress cases in `api/tests/unit/progress.test.ts` and `api/tests/api/progress.test.ts` |
 
 ## Manual checks
 
